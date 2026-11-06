@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_OCOR_TIPO" directorySegmentName="seg_0" id="5AB3FF94-6D34-48C9-1A01-9400DFC79ADF">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>ACAB4993-7E95-B131-C17A-A3C2EFF91EDE</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<sourcePk>1FE4DB30-A7A7-4611-D1E5-0CB9C090CD66</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>F6CCEB59-3325-C3AE-356D-652C9EDEC6D4</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>E6459D05-2A0A-AEFC-B509-A10A7C8F9856</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

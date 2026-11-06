@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="01B429E2-E740-0455-CE68-D88E34064677" containerWithKeyObject="04E24268-D086-73CD-1841-ED4D3B0B7686" localFKIndex="1707AC0B-3874-838E-BDE8-DACA5E5EF580" name="FK_OCOR_ANALISE">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>BBC9DA4A-D238-E5CE-998B-565AD3EE7634</importedID>
+<referredTableLongName>HISTORICO_ANALISE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>3CA4A7FF-E2BB-EFC4-B8C9-E6328F19826C</referredTableID>
+<keyObject>20132127-14F3-8F28-8D2F-CD2C643257F2</keyObject>
+<referredKeyID>20132127-14F3-8F28-8D2F-CD2C643257F2</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_ANALISE</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

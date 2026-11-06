@@ -1,0 +1,162 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9273DBBA-8ED4-38DF-1DF7-95E4E9DF9F95" name="USUARIO">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<commentInRDBMS><![CDATA[Pessoas cadastradas para utilizar o VisionHat.]]></commentInRDBMS>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>1A0A9573-7644-3D38-08D7-3EB0A8A92282</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_USUARIO" id="79E2C41B-1870-683F-AF63-E320F55CC60F">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>2F664818-BE19-0AA7-7E34-B64299A0D7E4</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_USUARIO</autoIncrementSequenceName>
+<autoIncrementTriggerName>TRG_USUARIO_BI</autoIncrementTriggerName>
+</Column>
+<Column name="CPF" id="BE36A8DF-AADA-608C-A3A8-1A0C532BF8A0">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<commentInRDBMS><![CDATA[Armazenar somente os 11 digitos, sem pontos ou hifen.]]></commentInRDBMS>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>B1D41A77-AA47-039A-FCC1-4BE1E917299C</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>001A0403-D3EB-A512-BA14-C50C62FC7048</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOME" id="C2203503-D8ED-BAE3-37EC-414E89BD614C">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>4BF829DF-693F-1680-F24F-DDCB30686AFC</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>35EC2DDC-40A5-68A2-9843-18099DB3AF21</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EMAIL" id="BA28D337-F096-4248-7C29-0FC0E897E634">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>FFF37038-0F9A-A3C5-5422-5820D5BCFB09</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>6E9BE80E-1DA8-4977-E11A-C6F76B3A482F</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SENHA_HASH" id="C92DBFF9-B82E-F580-753B-6F917C137E47">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<commentInRDBMS><![CDATA[Hash da senha; nunca armazenar senha em texto puro.]]></commentInRDBMS>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>C4C40B82-D81C-9423-FE36-6BE6D80E1A9B</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>A2A3600F-7F12-EC9E-FF4C-FAD402E16223</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DATA_CADASTRO" id="236A1F72-CB13-D118-4EB8-4F1FA6132C1D">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>98CDA566-F39D-BCC3-DD8C-265B60A60F06</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<domain>84AFA416-687A-71A4-9E40-3D669482A9D9</domain>
+<defaultValue>SYSTIMESTAMP</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="STATUS" id="704FE211-438E-785C-9A4C-F22021450C77">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>CD130EE8-58C6-CE8F-8A86-A3E03149FF58</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>374ED472-AC45-85BF-120D-B00C7C3A613F</domain>
+<defaultValue>&apos;A&apos;</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="20A996A1-D541-0F19-F3B3-DA44C3DAD021" name="PK_USUARIO">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>C8CCEAE7-C02E-1BBD-35CE-30BE1EA1E5B5</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="79E2C41B-1870-683F-AF63-E320F55CC60F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FE9A6466-203A-296F-3D6B-90F370555DDA" name="UK_USUARIO_CPF">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>2CE77B60-9471-D046-53E6-266E5D87B811</importedID>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BE36A8DF-AADA-608C-A3A8-1A0C532BF8A0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="79D34805-F2B0-E872-E33B-38370177EBCD" name="UK_USUARIO_EMAIL">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>71A7C890-74E7-2A63-5AFC-6A4FBBF99E2D</importedID>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BA28D337-F096-4248-7C29-0FC0E897E634"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+<tableCheckConstraints itemClass="oracle.dbtools.crest.model.design.constraint.TableLevelConstraint">
+<tableCheckConstraint name="CK_USUARIO_CPF" directorySegmentName="seg_0" id="34EA7AB3-67F0-98DB-A08C-EAE3F4443365">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>DFAB10C6-24A0-87B8-2603-4CDEC75D9D37</importedID>
+<rule><![CDATA[LENGTH(CPF) = 11]]></rule>
+</tableCheckConstraint>
+<tableCheckConstraint name="CK_USUARIO_STATUS" directorySegmentName="seg_0" id="E4D3FBBA-0D94-CFBF-E9CF-EA672D5AB5C8">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>B18C8A3B-2EC2-0F1C-02B1-78CD5357C94F</importedID>
+<rule><![CDATA[STATUS IN ('A', 'I')]]></rule>
+</tableCheckConstraint>
+</tableCheckConstraints>
+</Table>

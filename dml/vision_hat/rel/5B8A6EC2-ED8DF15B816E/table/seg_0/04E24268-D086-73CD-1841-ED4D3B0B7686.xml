@@ -1,0 +1,175 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="04E24268-D086-73CD-1841-ED4D3B0B7686" name="OCORRENCIA">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<commentInRDBMS><![CDATA[Uma deteccao individual de obstaculo vinculada a uma analise.]]></commentInRDBMS>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>BBB3DCA1-2BCD-2DCE-E7DF-7B0CFE6A5898</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_OCORRENCIA" id="7041C1F7-F934-7E52-7274-FE12E99D607F">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>79C1DF7E-1987-0CA2-5395-D704C606D6BA</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_OCORRENCIA</autoIncrementSequenceName>
+<autoIncrementTriggerName>TRG_OCORRENCIA_BI</autoIncrementTriggerName>
+</Column>
+<Column name="ID_ANALISE" id="B8444532-026A-A73D-8791-FD9FA1D62045">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>D5128ACB-399A-9B6C-E0BA-29F0083D8703</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="01B429E2-E740-0455-CE68-D88E34064677" referredColumn="78F83FCB-F7EC-B694-28C5-1BF57269F51D"/>
+</associations>
+</Column>
+<Column name="ID_TIPO_OBSTACULO" id="952A6D28-D5D2-283C-E739-F915712DC8BD">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>EB80A40D-B392-8162-937D-1DAD2C525E49</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="ACAB4993-7E95-B131-C17A-A3C2EFF91EDE" referredColumn="54B210A3-E66E-62B2-671B-FA12ACEFADDA"/>
+</associations>
+</Column>
+<Column name="DESCRICAO" id="A49746C8-8DD9-AD0D-B760-4AB2F87147B2">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>FD8A28E8-0341-D52B-4DB5-08FF8FDD3E6F</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>FBD24020-D111-CDC2-EDA8-42E509F2112E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NIVEL_ATENCAO" id="0309DEAC-F347-04AB-0F39-5DD1AA9A8A26">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<commentInRDBMS><![CDATA[Classificacao estimada pela IA; nao representa garantia de seguranca.]]></commentInRDBMS>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>EA1253DC-76FF-1456-F26B-CE5748DBF5EC</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>258E8687-EB82-614A-FD7A-F402DF377576</domain>
+<defaultValue>&apos;INDETERMINADO&apos;</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CONFIANCA" id="5C47FD0D-1719-A829-E981-FE292317DD75">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<commentInRDBMS><![CDATA[Confianca estimada pela IA em percentual, de 0 a 100; pode ser nula.]]></commentInRDBMS>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>270E326E-FFB3-032F-8E69-833CAAFCB0B4</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>04507D01-B9C9-6779-16A5-4B0BE5EA8861</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D5B83305-12EA-DA5C-34F9-13FCFF1FE807" name="PK_OCORRENCIA">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>466A8044-9C4F-20BF-00F8-8D767E234633</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7041C1F7-F934-7E52-7274-FE12E99D607F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F4E9456B-9278-A73A-EF27-DA7DF63A3658" name="IDX_OC_ID_ANALISE">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>F32F139E-282D-FCD5-D730-A74F905FEDA0</importedID>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B8444532-026A-A73D-8791-FD9FA1D62045"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2D180ABE-554B-364A-5854-C4B1F812729F" name="IDX_OC_ID_TIPO">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>F4C336C4-4DA4-9B6E-020B-1D4EB42BB27E</importedID>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="952A6D28-D5D2-283C-E739-F915712DC8BD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1707AC0B-3874-838E-BDE8-DACA5E5EF580" name="FK_OCOR_ANALISE">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B8444532-026A-A73D-8791-FD9FA1D62045"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CEFD5A9F-8734-0561-FD38-681748733A84" name="FK_OCOR_TIPO">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="952A6D28-D5D2-283C-E739-F915712DC8BD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+<tableCheckConstraints itemClass="oracle.dbtools.crest.model.design.constraint.TableLevelConstraint">
+<tableCheckConstraint name="CK_OCOR_ATENCAO" directorySegmentName="seg_0" id="07C0D08F-092E-6FA5-7FAD-860C81E39B26">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>BF4A037F-E435-79FC-CE48-680B14510EBD</importedID>
+<rule><![CDATA[NIVEL_ATENCAO IN ('BAIXO', 'MEDIO', 'ALTO', 'INDETERMINADO')]]></rule>
+</tableCheckConstraint>
+<tableCheckConstraint name="CK_OCOR_CONF" directorySegmentName="seg_0" id="6119B208-4EA5-155D-5D2F-2127EF1AA875">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>0013FD54-E38B-E315-055F-E1970ABF9A1C</importedID>
+<rule><![CDATA[CONFIANCA IS NULL OR CONFIANCA BETWEEN 0 AND 100]]></rule>
+</tableCheckConstraint>
+</tableCheckConstraints>
+</Table>

@@ -1,0 +1,121 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E6459D05-2A0A-AEFC-B509-A10A7C8F9856" name="OCORRENCIA">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<commentInRDBMS><![CDATA[Uma deteccao individual de obstaculo vinculada a uma analise.]]></commentInRDBMS>
+<generatorID>04E24268-D086-73CD-1841-ED4D3B0B7686</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID OCORRENCIA" id="FA5D364D-4BB4-ADFA-8742-B6B925046840">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>7041C1F7-F934-7E52-7274-FE12E99D607F</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID ANALISE" id="95A6CA53-CC50-E216-0949-4553C1226957">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>6341F9E7-6642-8F3F-FEA1-02CD72696F91</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<referedAttribute>F6B1578C-CF90-6F7A-971D-DABF812479B6</referedAttribute>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID TIPO OBSTACULO" id="94FEC569-C379-21E5-55D2-F78BF39A6403">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>5AB3FF94-6D34-48C9-1A01-9400DFC79ADF</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>8241FBF2-460A-DFA3-BF04-AF265BE2CEE2</referedAttribute>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="DESCRICAO" id="363961C9-125D-58E4-5563-427152DF0798">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>A49746C8-8DD9-AD0D-B760-4AB2F87147B2</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>FBD24020-D111-CDC2-EDA8-42E509F2112E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="NIVEL ATENCAO" id="928E9848-9664-94E8-5ADE-D1FA972367B7">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<commentInRDBMS><![CDATA[Classificacao estimada pela IA; nao representa garantia de seguranca.]]></commentInRDBMS>
+<generatorID>0309DEAC-F347-04AB-0F39-5DD1AA9A8A26</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>258E8687-EB82-614A-FD7A-F402DF377576</domain>
+<defaultValue>&apos;INDETERMINADO&apos;</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="CONFIANCA" id="00D75801-A38B-11F3-7333-BBAB6EE1917E">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<commentInRDBMS><![CDATA[Confianca estimada pela IA em percentual, de 0 a 100; pode ser nula.]]></commentInRDBMS>
+<generatorID>5C47FD0D-1719-A829-E981-FE292317DD75</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>04507D01-B9C9-6779-16A5-4B0BE5EA8861</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="D768372B-3AF5-C15F-680A-B05353640611" name="PK OCORRENCIA">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>D5B83305-12EA-DA5C-34F9-13FCFF1FE807</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>FA5D364D-4BB4-ADFA-8742-B6B925046840</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_HA_DISPOSITIVO" directorySegmentName="seg_0" id="236C0F86-1FBE-8F70-20D2-165072CE2F08">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>F775F64F-95B9-A86F-EB99-DB56822D4B21</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<sourcePk>28BA2A9D-0E46-6CC5-D081-EBAF0864AA97</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>97C4C321-4420-54B6-077F-837E331C5EB5</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>8184804C-4180-7334-9FC7-25106838FF28</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

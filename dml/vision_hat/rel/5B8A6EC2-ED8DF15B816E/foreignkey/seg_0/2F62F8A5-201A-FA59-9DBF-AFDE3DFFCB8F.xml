@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="2F62F8A5-201A-FA59-9DBF-AFDE3DFFCB8F" containerWithKeyObject="3CA4A7FF-E2BB-EFC4-B8C9-E6328F19826C" localFKIndex="13D5DE33-708A-7422-8B4E-5B98794CFBDA" name="FK_HA_LOCALIZACAO">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>B5E8DF38-0F71-A373-DEB9-A902446EEF32</importedID>
+<referredTableLongName>LOCALIZACAO</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>83003147-A849-57A6-B3E8-01C203A05597</referredTableID>
+<keyObject>6E93F183-62F5-8441-8E63-834DC1FE01CE</keyObject>
+<referredKeyID>6E93F183-62F5-8441-8E63-834DC1FE01CE</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_LOCALIZACAO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="ACAB4993-7E95-B131-C17A-A3C2EFF91EDE" containerWithKeyObject="04E24268-D086-73CD-1841-ED4D3B0B7686" localFKIndex="CEFD5A9F-8734-0561-FD38-681748733A84" name="FK_OCOR_TIPO">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>9822CD80-1C20-9909-991C-758199B66234</importedID>
+<referredTableLongName>TIPO_OBSTACULO</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>F223B755-684C-DD3C-2020-1A9021EEE57A</referredTableID>
+<keyObject>1AFB6A4F-0B17-B16B-A00B-2E2E8B6D54BD</keyObject>
+<referredKeyID>1AFB6A4F-0B17-B16B-A00B-2E2E8B6D54BD</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>ID_TIPO_OBSTACULO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

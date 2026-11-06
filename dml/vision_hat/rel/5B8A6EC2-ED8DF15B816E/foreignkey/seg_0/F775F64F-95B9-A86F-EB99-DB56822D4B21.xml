@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="F775F64F-95B9-A86F-EB99-DB56822D4B21" containerWithKeyObject="3CA4A7FF-E2BB-EFC4-B8C9-E6328F19826C" localFKIndex="C1F3908B-A0F7-3C7D-58C7-EEEE0B5BDB54" name="FK_HA_DISPOSITIVO">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>88E9300A-2E7E-C593-C474-F055754B3F1F</importedID>
+<referredTableLongName>DISPOSITIVO</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>AB822418-DC17-010F-5C18-3B14F79F9FE6</referredTableID>
+<keyObject>5D4B1C31-A660-B6D9-3650-E4EE29DF9937</keyObject>
+<referredKeyID>5D4B1C31-A660-B6D9-3650-E4EE29DF9937</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_DISPOSITIVO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

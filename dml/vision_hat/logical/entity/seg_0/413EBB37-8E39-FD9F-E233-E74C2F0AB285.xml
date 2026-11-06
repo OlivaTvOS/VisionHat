@@ -1,0 +1,155 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="413EBB37-8E39-FD9F-E233-E74C2F0AB285" name="USUARIO">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<commentInRDBMS><![CDATA[Pessoas cadastradas para utilizar o VisionHat.]]></commentInRDBMS>
+<generatorID>9273DBBA-8ED4-38DF-1DF7-95E4E9DF9F95</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID USUARIO" id="FA4A67C1-08AD-5FA3-70FC-57D2A84B4DD3">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>79E2C41B-1870-683F-AF63-E320F55CC60F</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="CPF" id="3AA14625-985C-EAA2-C3C4-C101CF4F72FE">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<commentInRDBMS><![CDATA[Armazenar somente os 11 digitos, sem pontos ou hifen.]]></commentInRDBMS>
+<generatorID>BE36A8DF-AADA-608C-A3A8-1A0C532BF8A0</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>001A0403-D3EB-A512-BA14-C50C62FC7048</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="NOME" id="0621E790-2D62-738B-9851-62F1CFEE8C4B">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>C2203503-D8ED-BAE3-37EC-414E89BD614C</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>35EC2DDC-40A5-68A2-9843-18099DB3AF21</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="EMAIL" id="9430E27A-0EC2-B761-871E-84A5EEB00F80">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>BA28D337-F096-4248-7C29-0FC0E897E634</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>6E9BE80E-1DA8-4977-E11A-C6F76B3A482F</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SENHA HASH" id="291F722E-6D43-575A-701A-6F1FA6F581BB">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<commentInRDBMS><![CDATA[Hash da senha; nunca armazenar senha em texto puro.]]></commentInRDBMS>
+<generatorID>C92DBFF9-B82E-F580-753B-6F917C137E47</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>A2A3600F-7F12-EC9E-FF4C-FAD402E16223</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="DATA CADASTRO" id="C96475FF-D57A-3857-137D-03CEE43908E0">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>236A1F72-CB13-D118-4EB8-4F1FA6132C1D</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<domain>84AFA416-687A-71A4-9E40-3D669482A9D9</domain>
+<defaultValue>SYSTIMESTAMP</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="STATUS" id="89655ECB-54E0-12DF-60E7-812E64FE682D">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>704FE211-438E-785C-9A4C-F22021450C77</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>374ED472-AC45-85BF-120D-B00C7C3A613F</domain>
+<defaultValue>&apos;A&apos;</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="5D3F14F2-A0DA-1D30-F082-6A5140DB5391" name="PK USUARIO">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>20A996A1-D541-0F19-F3B3-DA44C3DAD021</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>FA4A67C1-08AD-5FA3-70FC-57D2A84B4DD3</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="866D51C9-1B9D-E9AA-64E4-C75124BC0E9E" name="UK USUARIO CPF">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>FE9A6466-203A-296F-3D6B-90F370555DDA</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<usedAttributes>
+<attributeRef>3AA14625-985C-EAA2-C3C4-C101CF4F72FE</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="A4822705-3EDF-A1F7-C075-C29FAE2D136E" name="UK USUARIO EMAIL">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>79D34805-F2B0-E872-E33B-38370177EBCD</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<usedAttributes>
+<attributeRef>9430E27A-0EC2-B761-871E-84A5EEB00F80</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

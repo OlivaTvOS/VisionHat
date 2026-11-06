@@ -1,0 +1,117 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="479E1D72-05F7-8004-025C-34D97B6FE127" name="LOCALIZACAO">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<commentInRDBMS><![CDATA[Localizacao opcional associada ao momento de uma analise.]]></commentInRDBMS>
+<generatorID>83003147-A849-57A6-B3E8-01C203A05597</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID LOCALIZACAO" id="D0A1F61B-6ED0-A4EF-1153-23FB30A363B3">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>86C987BE-9564-D481-047F-2B96ABEF17B0</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="UF" id="947DD55E-BAE5-C01E-28E8-F199D3F65EBF">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>C2F401CD-72D2-5A86-360E-517EE6BCF66E</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>39DD9F43-2CC9-5E6C-E9F4-AE8C42A2D1E1</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="CIDADE" id="0EBB0CAF-ECDD-D2D9-0C62-78F0100AABD1">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>3EE92052-F62D-A16E-F3B3-99C893779EED</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>6C905807-01C2-68F2-C32F-2F6C640E04AE</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="BAIRRO" id="0A1A76FA-3B6B-406B-36CA-235FD55804FA">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>536F5B34-9B78-E3A6-111C-DA8F60A6A777</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>6C905807-01C2-68F2-C32F-2F6C640E04AE</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="LATITUDE" id="66463C1C-16EA-AA8F-3876-919DDFBC744F">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>0ECDAF99-FD41-E694-E44C-9AEC9CD5E06E</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>BCF6D9BB-23EA-1525-023E-D924F9220CB3</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="LONGITUDE" id="368D4521-1B88-5B6E-AE71-AFA75A32DB64">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>877022B0-CF3E-AAF9-BA45-18E0D6E7DA02</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>BCF6D9BB-23EA-1525-023E-D924F9220CB3</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="03CA7472-977B-01FB-41A1-F808E0F2754A" name="PK LOCALIZACAO">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>6E93F183-62F5-8441-8E63-834DC1FE01CE</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>D0A1F61B-6ED0-A4EF-1153-23FB30A363B3</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

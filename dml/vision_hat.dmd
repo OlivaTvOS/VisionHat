@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="vision_hat" id="C8C95EB3-DF64-72F0-C40A-D148145D0952" version="3.5">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 17:21:34 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>C8C95EB3-DF64-72F0-C40A-D148145D0952</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="DEA5C735-2F9D-7BFC-18A8-04CDFF705705">
+<designStoragePath>/VisionHat_Modelo_Base_Oracle11g</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
+</OSDM_Design>

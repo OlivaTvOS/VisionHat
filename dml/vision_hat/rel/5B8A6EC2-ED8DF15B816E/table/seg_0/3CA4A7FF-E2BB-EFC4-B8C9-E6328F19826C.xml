@@ -1,0 +1,206 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3CA4A7FF-E2BB-EFC4-B8C9-E6328F19826C" name="HISTORICO_ANALISE">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<commentInRDBMS><![CDATA[Registro de cada captura e processamento de imagem pela IA.]]></commentInRDBMS>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>8B82BE7C-E34A-06B1-7D26-8F8D88F39603</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_ANALISE" id="78F83FCB-F7EC-B694-28C5-1BF57269F51D">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>1687FA91-EC30-E5FA-1A60-85C88E44DF03</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_HIST_ANALISE</autoIncrementSequenceName>
+<autoIncrementTriggerName>TRG_HA_BI</autoIncrementTriggerName>
+</Column>
+<Column name="ID_DISPOSITIVO" id="77E4D5E1-0000-2F25-884F-371BDB76FB3F">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>99C773D1-18DF-02F6-A30A-3043B0FDDD56</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F775F64F-95B9-A86F-EB99-DB56822D4B21" referredColumn="1C5C0C16-D33F-B526-CD40-A7DF056AAD82"/>
+</associations>
+</Column>
+<Column name="ID_LOCALIZACAO" id="3AB041D8-D3AE-47A8-480D-DB093A0FEC8E">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>5732F157-37A0-FCCA-2C4A-5B32BDEE47E2</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>024F3AF4-8070-A41D-05B5-6B93C628A72C</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2F62F8A5-201A-FA59-9DBF-AFDE3DFFCB8F" referredColumn="86C987BE-9564-D481-047F-2B96ABEF17B0"/>
+</associations>
+</Column>
+<Column name="DATA_HORA" id="DEF291E3-373E-A93D-E058-B2705733A607">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>8AA55DFD-FC7F-E4A1-6526-0C8AB66600DB</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<domain>84AFA416-687A-71A4-9E40-3D669482A9D9</domain>
+<defaultValue>SYSTIMESTAMP</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REFERENCIA_IMAGEM" id="3AE46377-B771-B485-91A9-548B70FD3C20">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<commentInRDBMS><![CDATA[Caminho, URL ou chave externa da imagem; nao armazena o arquivo binario.]]></commentInRDBMS>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>80041B8E-6A19-40AE-352D-1BD13575F1E8</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>FBD24020-D111-CDC2-EDA8-42E509F2112E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRICAO_IA" id="1C0E7995-3EA5-5A4C-A6E3-48DAA23B4F63">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>F6FFEEF3-F226-1CA0-B9F6-4677396D7525</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>4B1F4000-2B46-54F5-73E5-AE7B5365D3A0</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MODELO_IA" id="00FDD6C5-D3F4-DF91-1C61-8513C39F0742">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>AA5D9DD4-2823-A4C3-7A96-D81D89740C20</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>6C905807-01C2-68F2-C32F-2F6C640E04AE</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="STATUS" id="CA980F31-5E5B-D5C9-7DA9-9C412D55C8C2">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>7AED03CF-40C4-9C2A-B156-7E4B137AF9AB</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>258E8687-EB82-614A-FD7A-F402DF377576</domain>
+<defaultValue>&apos;PENDENTE&apos;</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ERRO_PROCESSAMENTO" id="89FA8984-62C3-269E-5677-163D63BE33CC">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>2ED94870-A107-2909-F780-FC0E37A09D9B</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>FBD24020-D111-CDC2-EDA8-42E509F2112E</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="20132127-14F3-8F28-8D2F-CD2C643257F2" name="PK_HIST_ANALISE">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>17AAB3B2-BCC4-15C3-8D20-4BD92E15624E</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="78F83FCB-F7EC-B694-28C5-1BF57269F51D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="739B696A-D145-8D9C-A4B2-BF59AA739519" name="IDX_HA_ID_DISP">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>ADB88634-6AF1-9054-6CE7-229AC93F5DD6</importedID>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="77E4D5E1-0000-2F25-884F-371BDB76FB3F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D96D614F-78A8-051E-8F0E-14BF32D52270" name="IDX_HA_ID_LOCAL">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>D06D2A98-0660-1BB1-2284-6DE192B43C8C</importedID>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3AB041D8-D3AE-47A8-480D-DB093A0FEC8E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C1F3908B-A0F7-3C7D-58C7-EEEE0B5BDB54" name="FK_HA_DISPOSITIVO">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="77E4D5E1-0000-2F25-884F-371BDB76FB3F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="13D5DE33-708A-7422-8B4E-5B98794CFBDA" name="FK_HA_LOCALIZACAO">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3AB041D8-D3AE-47A8-480D-DB093A0FEC8E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+<tableCheckConstraints itemClass="oracle.dbtools.crest.model.design.constraint.TableLevelConstraint">
+<tableCheckConstraint name="CK_HA_STATUS" directorySegmentName="seg_0" id="2A82355D-846B-7EBB-E17A-E8CB178CBFC1">
+<sourceDDLFile>VisionHat_Modelo_Base_Oracle11g.sql</sourceDDLFile>
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:03 UTC</createdTime>
+<ownerDesignName>vision_hat</ownerDesignName>
+<importedID>67965B4F-6DB6-8CA7-21DF-29A259F5B50E</importedID>
+<rule><![CDATA[STATUS IN ('PENDENTE', 'PROCESSANDO', 'CONCLUIDA', 'FALHA')]]></rule>
+</tableCheckConstraint>
+</tableCheckConstraints>
+</Table>

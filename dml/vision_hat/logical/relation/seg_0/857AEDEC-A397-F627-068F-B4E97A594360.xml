@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="FK_HA_LOCALIZACAO" directorySegmentName="seg_0" id="857AEDEC-A397-F627-068F-B4E97A594360">
+<createdBy>artur-oliveira</createdBy>
+<createdTime>2026-11-05 18:20:21 UTC</createdTime>
+<generatorID>2F62F8A5-201A-FA59-9DBF-AFDE3DFFCB8F</generatorID>
+<ownerDesignName>vision_hat</ownerDesignName>
+<engineerTo>
+<item key="5B8A6EC2-4497-421A-547C-ED8DF15B816E" value="true"/>
+</engineerTo>
+<sourcePk>03CA7472-977B-01FB-41A1-F808E0F2754A</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>479E1D72-05F7-8004-025C-34D97B6FE127</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>8184804C-4180-7334-9FC7-25106838FF28</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>
