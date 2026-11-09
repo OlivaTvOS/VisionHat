@@ -1,0 +1,5 @@
+import { Icon } from '../ui/Icons'
+
+export default function Topbar({ onMenu }: { onMenu: () => void }) {
+  return <header className="flex h-20 items-center justify-between border-b border-slate-700/60 bg-[#202c40] px-5 sm:px-8"><div className="flex items-center gap-3"><button aria-label="Abrir menu" className="rounded-lg p-2 text-slate-300 hover:bg-slate-700 md:hidden" onClick={onMenu}><Icon name="menu" /></button><span className="text-lg font-bold text-white md:hidden">VisionHat</span><div className="hidden items-center gap-2 md:flex"><span className="h-2.5 w-2.5 rounded-full bg-emerald-400" /><span className="text-sm text-slate-300">Sistema pronto para receber uma análise</span></div></div><div className="flex items-center gap-3"><button className="grid h-11 w-11 place-items-center rounded-xl bg-blue-600 text-white transition hover:bg-blue-500" aria-label="Controle de voz"><Icon name="voice" /></button><button className="grid h-11 w-11 place-items-center rounded-xl bg-slate-100 text-slate-800 transition hover:bg-white" aria-label="Alternar tema"><Icon name="moon" /></button></div></header>
+}
