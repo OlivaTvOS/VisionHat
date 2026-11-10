@@ -34,6 +34,13 @@ export interface HistoricoAnalise {
   erroProcessamento: string | null
 }
 
+export interface HistoricoAnaliseCadastro {
+  idDispositivo: number
+  idLocalizacao?: number | null
+  referenciaImagem?: string
+  modeloIa?: string
+}
+
 export type NivelAtencao = 'BAIXO' | 'MEDIO' | 'ALTO' | 'INDETERMINADO'
 
 export interface Ocorrencia {

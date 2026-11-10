@@ -5,7 +5,8 @@ import Home from '../pages/home/Home'
 import Dispositivos from '../pages/dispositivos/Dispositivos'
 import Historico from '../pages/historico/Historico'
 import Ocorrencias from '../pages/ocorrencias/Ocorrencias'
+import Visao from '../pages/visao/Visao'
 
 export default function AppRoutes() {
-  return <Routes><Route element={<AppLayout />}><Route path="/" element={<Home />} /><Route path="/visao" element={<PlaceholderPage title="Visão" description="A captura e a análise visual serão conectadas ao backend no próximo bloco." />} /><Route path="/historico" element={<Historico />} /><Route path="/dispositivos" element={<Dispositivos />} /><Route path="/sobre" element={<PlaceholderPage title="Sobre o projeto" description="A apresentação institucional do VisionHat será refinada em um bloco posterior." />} /><Route path="/ocorrencias" element={<Ocorrencias />} /><Route path="*" element={<PlaceholderPage title="Página não encontrada" description="A rota informada não existe no VisionHat." />} /></Route></Routes>
+  return <Routes><Route element={<AppLayout />}><Route path="/" element={<Home />} /><Route path="/visao" element={<Visao />} /><Route path="/historico" element={<Historico />} /><Route path="/dispositivos" element={<Dispositivos />} /><Route path="/sobre" element={<PlaceholderPage title="Sobre o projeto" description="A apresentação institucional do VisionHat será refinada em um bloco posterior." />} /><Route path="/ocorrencias" element={<Ocorrencias />} /><Route path="*" element={<PlaceholderPage title="Página não encontrada" description="A rota informada não existe no VisionHat." />} /></Route></Routes>
 }
