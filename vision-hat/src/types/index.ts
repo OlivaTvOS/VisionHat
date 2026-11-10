@@ -34,4 +34,15 @@ export interface HistoricoAnalise {
   erroProcessamento: string | null
 }
 
+export type NivelAtencao = 'BAIXO' | 'MEDIO' | 'ALTO' | 'INDETERMINADO'
+
+export interface Ocorrencia {
+  idOcorrencia: number
+  idAnalise: number
+  idTipoObstaculo: number | null
+  descricao: string
+  nivelAtencao: NivelAtencao
+  confianca: number | null
+}
+
 export interface ApiErrorResponse { erro?: string }
