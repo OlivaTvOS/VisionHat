@@ -1,5 +1,3 @@
-function Integrantes(){
+import Card from '../../components/ui/Card'
 
-}
-
-export default Integrantes
+export default function Integrantes() { return <div className="space-y-6"><header><p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-400">Equipe</p><h1 className="mt-2 text-3xl font-bold text-white">Integrantes</h1></header><Card className="max-w-xl"><div className="flex items-center gap-4"><div className="grid h-14 w-14 place-items-center rounded-full bg-blue-600 text-xl font-bold text-white">AO</div><div><h2 className="text-xl font-bold text-white">Artur da Silva de Oliveira</h2><p className="mt-1 text-sm text-slate-400">RM 569870 · 1º ADS / TDSPI</p></div></div><p className="mt-5 text-sm leading-6 text-slate-400">Desenvolvimento e integração do protótipo VisionHat.</p></Card></div> }

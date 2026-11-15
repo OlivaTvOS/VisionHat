@@ -8,6 +8,7 @@ export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): 
     try { mensagem = (JSON.parse(texto) as ApiErrorResponse).erro ?? mensagem } catch { /* resposta pode não ser JSON */ }
     throw new Error(mensagem)
   }
-  if (response.status === 204) return undefined as T
-  return response.json() as Promise<T>
+  if (response.status === 204 || response.status === 201) return undefined as T
+  const texto = await response.text()
+  return (texto ? JSON.parse(texto) : undefined) as T
 }

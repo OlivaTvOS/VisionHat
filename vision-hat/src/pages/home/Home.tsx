@@ -25,7 +25,7 @@ export default function Home() {
   }, [])
 
   const indicadores = [
-    { label: 'Usuários cadastrados', value: statusApi === 'carregando' ? '...' : String(usuarios), helper: 'Dados reais da API', icon: 'vision' as const, color: 'text-blue-400' },
+    { label: 'Usuários cadastrados', value: statusApi === 'carregando' ? '...' : statusApi === 'offline' ? '—' : String(usuarios), helper: statusApi === 'offline' ? 'API indisponível' : 'Dados reais da API', icon: 'vision' as const, color: 'text-blue-400' },
     { label: 'Dispositivos', value: '—', helper: 'Consulte por usuário', icon: 'device' as const, color: 'text-emerald-400' },
     { label: 'Ocorrências', value: '—', helper: 'Consulte por análise', icon: 'alert' as const, color: 'text-amber-400' },
     { label: 'Histórico', value: '—', helper: 'Consulte por dispositivo', icon: 'history' as const, color: 'text-violet-400' },

@@ -1,5 +1,5 @@
-function Faq(){
+import Card from '../../components/ui/Card'
 
-}
+const perguntas = [['O que é o VisionHat?', 'É uma solução assistiva que organiza análises visuais, dispositivos e ocorrências para apoiar a percepção de obstáculos.'], ['A análise já usa a câmera do dispositivo?', 'A interface registra análises pendentes. A captura física e o processamento de IA serão conectados nas etapas de hardware e IA.'], ['Onde os dados são armazenados?', 'A API Java usa Oracle para persistir usuários, dispositivos, análises, localizações, tipos de obstáculo e ocorrências.'], ['O sistema substitui uma avaliação de segurança?', 'Não. Os níveis de atenção são estimativas do sistema e devem ser interpretados como apoio à percepção.']]
 
-export default Faq
+export default function Faq() { return <div className="space-y-6"><header><p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-400">Dúvidas</p><h1 className="mt-2 text-3xl font-bold text-white">Perguntas frequentes</h1></header><section className="space-y-4">{perguntas.map(([pergunta, resposta]) => <Card key={pergunta}><h2 className="font-semibold text-white">{pergunta}</h2><p className="mt-2 text-sm leading-6 text-slate-400">{resposta}</p></Card>)}</section></div> }
