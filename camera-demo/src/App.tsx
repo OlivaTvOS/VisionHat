@@ -128,6 +128,7 @@ export default function App() {
     setMessage("Solicitando fotografia à câmera...");
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
 
+    let cameraResponded = false;
     try {
       setMessage("A câmera está capturando e enviando a imagem para análise...");
       const response = await fetchWithTimeout(
@@ -135,6 +136,8 @@ export default function App() {
         { method: "POST", cache: "no-store" },
         190000,
       );
+      cameraResponded = true;
+      setConnection("online");
 
       const raw = await response.text();
       let data: AnalysisResult | ApiError;
@@ -155,9 +158,11 @@ export default function App() {
       setResult(analysis);
       setConnection("online");
       setMessage("Análise concluída.");
-      speak(analysis.descricao);
+      if (!speak(analysis.descricao)) {
+        setMessage("Análise concluída. Leitura em voz alta indisponível neste aparelho.");
+      }
     } catch (err) {
-      setConnection("offline");
+      setConnection(cameraResponded ? "online" : "offline");
       setMessage("Não foi possível concluir a captura.");
       if (err instanceof Error && err.name === "AbortError") {
         setError("A solicitação excedeu o tempo limite. Aguarde a câmera e a API e tente novamente.");
