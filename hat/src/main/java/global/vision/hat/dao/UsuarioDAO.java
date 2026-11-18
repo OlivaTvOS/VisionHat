@@ -29,18 +29,32 @@ public class UsuarioDAO {
 
         try (Connection conexao = dataSource.getConnection();
              PreparedStatement comando = conexao.prepareStatement(sql)) {
-
             comando.setInt(1, idUsuario);
-
             try (ResultSet resultado = comando.executeQuery()) {
-                if (!resultado.next()) {
-                    return Optional.empty();
-                }
-
+                if (!resultado.next()) return Optional.empty();
                 return Optional.of(mapear(resultado));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Não foi possível buscar o usuário no banco de dados.", e);
+        }
+    }
+
+    public Optional<Usuario> buscarPorEmail(String email) {
+        String sql = """
+                SELECT ID_USUARIO, CPF, NOME, EMAIL, SENHA_HASH, DATA_CADASTRO, STATUS
+                FROM USUARIO
+                WHERE EMAIL = ?
+                """;
+
+        try (Connection conexao = dataSource.getConnection();
+             PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setString(1, email);
+            try (ResultSet resultado = comando.executeQuery()) {
+                if (!resultado.next()) return Optional.empty();
+                return Optional.of(mapear(resultado));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Não foi possível consultar o usuário pelo e-mail.", e);
         }
     }
 
@@ -55,10 +69,7 @@ public class UsuarioDAO {
         try (Connection conexao = dataSource.getConnection();
              PreparedStatement comando = conexao.prepareStatement(sql);
              ResultSet resultado = comando.executeQuery()) {
-
-            while (resultado.next()) {
-                usuarios.add(mapear(resultado));
-            }
+            while (resultado.next()) usuarios.add(mapear(resultado));
             return usuarios;
         } catch (SQLException e) {
             throw new RuntimeException("Não foi possível listar os usuários.", e);
@@ -73,7 +84,6 @@ public class UsuarioDAO {
 
         try (Connection conexao = dataSource.getConnection();
              PreparedStatement comando = conexao.prepareStatement(sql)) {
-
             comando.setString(1, usuario.getCpf());
             comando.setString(2, usuario.getNome());
             comando.setString(3, usuario.getEmail());
@@ -87,16 +97,26 @@ public class UsuarioDAO {
         }
     }
 
+    public void atualizarSenhaHash(int idUsuario, String senhaHash) {
+        String sql = "UPDATE USUARIO SET SENHA_HASH = ? WHERE ID_USUARIO = ?";
+        try (Connection conexao = dataSource.getConnection();
+             PreparedStatement comando = conexao.prepareStatement(sql)) {
+            comando.setString(1, senhaHash);
+            comando.setInt(2, idUsuario);
+            comando.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Não foi possível atualizar a senha do usuário.", e);
+        }
+    }
+
     public void atualizar(Usuario usuario) {
         String sql = """
                 UPDATE USUARIO
                 SET CPF = ?, NOME = ?, EMAIL = ?, SENHA_HASH = ?
                 WHERE ID_USUARIO = ?
                 """;
-
         try (Connection conexao = dataSource.getConnection();
              PreparedStatement comando = conexao.prepareStatement(sql)) {
-
             comando.setString(1, usuario.getCpf());
             comando.setString(2, usuario.getNome());
             comando.setString(3, usuario.getEmail());
@@ -110,10 +130,8 @@ public class UsuarioDAO {
 
     public void alterarStatus(int idUsuario, char status) {
         String sql = "UPDATE USUARIO SET STATUS = ? WHERE ID_USUARIO = ?";
-
         try (Connection conexao = dataSource.getConnection();
              PreparedStatement comando = conexao.prepareStatement(sql)) {
-
             comando.setString(1, String.valueOf(status));
             comando.setInt(2, idUsuario);
             comando.executeUpdate();
