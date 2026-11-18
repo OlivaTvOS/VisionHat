@@ -35,6 +35,15 @@ public class UsuarioController {
         return ResponseEntity.of(usuarioService.buscarPorId(idUsuario));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> autenticar(@RequestBody Usuario usuario) {
+        if (usuario == null) {
+            throw new IllegalArgumentException("Informe e-mail e senha para entrar.");
+        }
+        return ResponseEntity.ok(
+                usuarioService.autenticar(usuario.getEmail(), usuario.getSenhaHash()));
+    }
+
     @PostMapping
     public ResponseEntity<Void> cadastrar(@RequestBody Usuario usuario) {
         usuarioService.cadastrar(usuario);
