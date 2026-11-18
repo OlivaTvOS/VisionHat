@@ -10,10 +10,10 @@ import java.sql.Timestamp;
 @Getter @Setter
 @NoArgsConstructor
 public class Dispositivo {
-    private int id_dispositivo;
-    private int id_usuario;
+    private int idDispositivo;
+    private int idUsuario;
     private String identificador;
     private String modelo;
-    private Timestamp data_cadastro;
+    private Timestamp dataCadastro;
     private char status;
 }
