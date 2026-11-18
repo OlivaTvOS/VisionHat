@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -22,6 +23,14 @@ public class ApiExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Map<String, String>> tratarRegistroInexistente(NoSuchElementException e) {
         return ResponseEntity.status(404).body(Map.of("erro", e.getMessage()));
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Map<String, String>> tratarStatus(ResponseStatusException e) {
+        String mensagem = e.getReason() == null
+                ? "Não foi possível concluir a solicitação."
+                : e.getReason();
+        return ResponseEntity.status(e.getStatusCode()).body(Map.of("erro", mensagem));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
