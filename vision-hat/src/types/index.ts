@@ -60,4 +60,4 @@ export interface Ocorrencia {
   confianca: number | null
 }
 
-export interface ApiErrorResponse { erro?: string }
+export interface ApiErrorResponse { erro?: string; detail?: string }
