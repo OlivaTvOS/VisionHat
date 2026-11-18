@@ -95,8 +95,8 @@ export default function App() {
       const response = await fetchWithTimeout(base + "/status", { method: "GET", cache: "no-store" }, 5000);
       if (!response.ok) throw new Error(await responseMessage(response));
       const status = await response.json() as CameraStatus;
-      if (status.status !== "online" || status.camera !== "ready") {
-        throw new Error("A câmera respondeu, mas ainda não está pronta.");
+      if (status.status !== "online" || status.camera !== "ready" || status.wifi !== "connected") {
+        throw new Error("A câmera respondeu, mas a câmera ou a conexão Wi-Fi ainda não está pronta.");
       }
       setConnection("online");
       setMessage("Câmera conectada · IP " + (status.ip || "local"));
