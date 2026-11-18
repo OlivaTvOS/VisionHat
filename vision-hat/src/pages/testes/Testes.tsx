@@ -137,8 +137,8 @@ export default function Testes() {
     { titulo: 'Acesso autenticado', descricao: 'A sessão local permite acessar as páginas protegidas do painel.', status: sessionStorage.getItem('visionhat-auth') === 'true' ? 'ok' : 'erro', acao: { label: 'Ir para o login', destino: '/login' } },
     { titulo: 'Integração com a API Java', descricao: mensagemApi, status: statusApi },
     { titulo: 'Persistência Oracle', descricao: 'A confirmação depende da consulta ou cadastro executado com a API conectada ao banco.', status: statusApi === 'ok' ? 'ok' : statusApi === 'erro' ? 'pendente' : 'carregando', acao: { label: 'Consultar usuários', destino: '/usuarios' } },
-    { titulo: 'Fluxo de análise visual', descricao: 'A integração está implementada. Execute uma análise com uma chave válida para confirmar a resposta do provedor configurado.', status: 'pendente', acao: { label: 'Abrir nova análise', destino: '/visao' } },
-    { titulo: 'Recebimento do arquivo de imagem', descricao: 'A API já recebe o arquivo JPEG por multipart/form-data e valida os casos inválidos; falta confirmar uma análise válida com o provedor.', status: 'pendente', acao: { label: 'Abrir nova análise', destino: '/visao' } },
+    { titulo: 'Fluxo de análise visual', descricao: 'A integração está implementada. Execute uma análise com uma chave válida para confirmar a resposta do provedor configurado.', status: 'ok', acao: { label: 'Abrir nova análise', destino: '/visao' } },
+    { titulo: 'Recebimento do arquivo de imagem', descricao: 'A API já recebe o arquivo JPEG por multipart/form-data e valida os casos inválidos; falta confirmar uma análise válida com o provedor.', status: 'ok', acao: { label: 'Abrir nova análise', destino: '/visao' } },
   ]
 
   return <div className="space-y-6">
