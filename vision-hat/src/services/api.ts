@@ -1,7 +1,11 @@
 import type { ApiErrorResponse } from '../types'
 
 export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const response = await fetch(endpoint, { ...options, headers: { 'Content-Type': 'application/json', ...options.headers } })
+  const headers = new Headers(options.headers)
+  if (!(options.body instanceof FormData) && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json')
+  }
+  const response = await fetch(endpoint, { ...options, headers })
   if (!response.ok) {
     const texto = await response.text()
     let mensagem = texto || 'Não foi possível concluir a solicitação.'

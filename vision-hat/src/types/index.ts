@@ -41,6 +41,14 @@ export interface HistoricoAnaliseCadastro {
   modeloIa?: string
 }
 
+export interface AnaliseImagemResponse {
+  idDispositivo: number
+  descricao: string
+  modeloIa: string
+  status: StatusAnalise
+  usouFallback: boolean
+}
+
 export type NivelAtencao = 'BAIXO' | 'MEDIO' | 'ALTO' | 'INDETERMINADO'
 
 export interface Ocorrencia {
