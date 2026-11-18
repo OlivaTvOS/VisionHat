@@ -8,6 +8,8 @@ import { analisarImagem } from '../../services/analises'
 import type { AnaliseImagemResponse } from '../../types'
 
 export default function Visao() {
+  const idUsuario = sessionStorage.getItem('visionhat-user-id')
+  const nomeUsuario = sessionStorage.getItem('visionhat-user-name')
   const [idDispositivo, setIdDispositivo] = useState('')
   const [arquivo, setArquivo] = useState<File | null>(null)
   const [previsualizacao, setPrevisualizacao] = useState('')
@@ -84,6 +86,17 @@ export default function Visao() {
 
   return <div className="space-y-6">
     <header><p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-400">Captura assistiva</p><h1 className="mt-2 text-3xl font-bold text-white">Análise de imagem</h1><p className="mt-2 text-slate-400">Envie uma imagem JPEG para receber uma descrição do modelo de IA configurado na API Java.</p></header>
+    <Card className="max-w-3xl border-blue-400/30">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-300">Conta da sessão</p>
+          <p className="mt-1 text-sm text-slate-400">{nomeUsuario || 'Usuário autenticado'}</p>
+        </div>
+        <div className="rounded-lg bg-blue-500/15 px-4 py-2 text-sm text-blue-100">
+          ID do usuário: <strong className="font-bold text-white">{idUsuario || 'Não identificado'}</strong>
+        </div>
+      </div>
+    </Card>
     <Card className="max-w-3xl">
       <div className="mb-6 flex items-start gap-4 rounded-xl border border-blue-400/20 bg-blue-500/10 p-4"><Icon name="vision" className="mt-0.5 h-6 w-6 shrink-0 text-blue-300" /><p className="text-sm leading-6 text-blue-100">A imagem original será enviada diretamente ao backend. Se o modelo principal atingir um limite, a API poderá utilizar o próximo provedor configurado.</p></div>
       <form noValidate className="space-y-5" onSubmit={analisar}>
