@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CapacitorHttp } from "@capacitor/core";
 
 type CameraStatus = {
   status?: string;
@@ -31,25 +32,28 @@ function cameraUrl(value: string): string {
   return parsed.origin;
 }
 
-async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
-  const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, { ...options, signal: controller.signal });
-  } finally {
-    window.clearTimeout(timeout);
+function parseResponseData<T>(data: unknown): T {
+  if (typeof data === "string") {
+    return JSON.parse(data) as T;
   }
+  return data as T;
 }
 
-async function responseMessage(response: Response): Promise<string> {
-  const body = await response.text();
-  if (!body) return "A câmera respondeu com HTTP " + response.status + ".";
-  try {
-    const data = JSON.parse(body) as ApiError;
-    return data.erro || data.detail || data.message || body;
-  } catch {
-    return body;
+function responseMessage(data: unknown, status: number): string {
+  if (typeof data === "string") {
+    try {
+      data = JSON.parse(data) as ApiError;
+    } catch {
+      return data || "A câmera respondeu com HTTP " + status + ".";
+    }
   }
+
+  if (data && typeof data === "object") {
+    const error = data as ApiError;
+    return error.erro || error.detail || error.message || "A câmera respondeu com HTTP " + status + ".";
+  }
+
+  return "A câmera respondeu com HTTP " + status + ".";
 }
 
 function speak(text: string): boolean {
@@ -92,9 +96,15 @@ export default function App() {
     setError("");
     setMessage("Verificando conexão com a câmera...");
     try {
-      const response = await fetchWithTimeout(base + "/status", { method: "GET", cache: "no-store" }, 5000);
-      if (!response.ok) throw new Error(await responseMessage(response));
-      const status = await response.json() as CameraStatus;
+      const response = await CapacitorHttp.get({
+        url: base + "/status",
+        connectTimeout: 5000,
+        readTimeout: 5000,
+      });
+      if (response.status < 200 || response.status >= 300) {
+        throw new Error(responseMessage(response.data, response.status));
+      }
+      const status = parseResponseData<CameraStatus>(response.data);
       if (status.status !== "online" || status.camera !== "ready" || status.wifi !== "connected") {
         throw new Error("A câmera respondeu, mas a câmera ou a conexão Wi-Fi ainda não está pronta.");
       }
@@ -131,28 +141,19 @@ export default function App() {
     let cameraResponded = false;
     try {
       setMessage("A câmera está capturando e enviando a imagem para análise...");
-      const response = await fetchWithTimeout(
-        base + "/capture?idDispositivo=" + parsedId,
-        { method: "POST", cache: "no-store" },
-        190000,
-      );
+      const response = await CapacitorHttp.post({
+        url: base + "/capture?idDispositivo=" + parsedId,
+        connectTimeout: 20000,
+        readTimeout: 180000,
+      });
       cameraResponded = true;
       setConnection("online");
 
-      const raw = await response.text();
-      let data: AnalysisResult | ApiError;
-      try {
-        data = JSON.parse(raw) as AnalysisResult | ApiError;
-      } catch {
-        throw new Error(raw || "Resposta inválida da câmera (HTTP " + response.status + ").");
+      if (response.status < 200 || response.status >= 300) {
+        throw new Error(responseMessage(response.data, response.status));
       }
 
-      if (!response.ok) {
-        const apiError = data as ApiError;
-        throw new Error(apiError.erro || apiError.detail || apiError.message || "Falha HTTP " + response.status + ".");
-      }
-
-      const analysis = data as AnalysisResult;
+      const analysis = parseResponseData<AnalysisResult>(response.data);
       if (!analysis.descricao) throw new Error("A API não retornou uma descrição para a imagem.");
 
       setResult(analysis);
@@ -164,11 +165,7 @@ export default function App() {
     } catch (err) {
       setConnection(cameraResponded ? "online" : "offline");
       setMessage("Não foi possível concluir a captura.");
-      if (err instanceof Error && err.name === "AbortError") {
-        setError("A solicitação excedeu o tempo limite. Aguarde a câmera e a API e tente novamente.");
-      } else {
-        setError(err instanceof Error ? err.message : "Falha ao comunicar com a câmera.");
-      }
+      setError(err instanceof Error ? err.message : "Falha ao comunicar com a câmera.");
     } finally {
       setBusy(false);
     }
