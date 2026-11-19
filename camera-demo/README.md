@@ -31,7 +31,8 @@ A câmera permanece disponível enquanto receber energia. O mDNS depende de a re
 - Resolução SVGA, qualidade JPEG 10, framebuffer em PSRAM e ajustes de imagem preservados.
 - Botão físico e acionamento serial removidos.
 - Servidor local com GET /status e POST /capture?idDispositivo=ID.
-- Reconexão Wi-Fi automática em caso de queda.\n- Nome local fixo visionhat-camera.local anunciado por mDNS.
+- Reconexão Wi-Fi automática em caso de queda.
+- Nome local fixo visionhat-camera.local anunciado por mDNS.
 - Envio JPEG multipart direto ao endpoint Java existente.
 
 ### Segurança do protótipo
