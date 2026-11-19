@@ -55,6 +55,8 @@ npx cap open android
 
 O primeiro npm install gera package-lock.json; mantenha esse arquivo no projeto depois de instalado.
 
+O app chama a câmera por meio do CapacitorHttp, que executa as requisições na camada HTTP nativa do Android, em vez do fetch do WebView. Isso evita o bloqueio de conteúdo misto e as restrições CORS do navegador. A permissão de HTTP local continua necessária por causa do servidor da câmera.
+
 No Android Studio, aguarde o Gradle terminar e selecione Build > Build Bundle(s) / APK(s) > Build APK(s). O APK de debug ficará em:
 
 android/app/build/outputs/apk/debug/app-debug.apk
