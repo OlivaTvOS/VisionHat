@@ -219,7 +219,7 @@ export default function App() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         data: { email: loginEmail.trim(), senhaHash: loginPassword },
         connectTimeout: 15000,
-        readTimeout: 30000,
+        readTimeout: 90000,
       });
 
       if (loginResponse.status < 200 || loginResponse.status >= 300) {
@@ -235,7 +235,7 @@ export default function App() {
         url: API_BASE + "/api/dispositivos/usuario/" + usuario.idUsuario,
         headers: { Accept: "application/json" },
         connectTimeout: 15000,
-        readTimeout: 30000,
+        readTimeout: 90000,
       });
 
       if (dispositivosResponse.status < 200 || dispositivosResponse.status >= 300) {
