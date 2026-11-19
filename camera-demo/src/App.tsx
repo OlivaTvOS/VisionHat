@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CapacitorHttp } from "@capacitor/core";
-import { TextToSpeech } from "@capacitor-community/text-to-speech";
+import { QueueStrategy, TextToSpeech } from "@capacitor-community/text-to-speech";
 
 type CameraStatus = {
   status?: string;
@@ -130,7 +130,7 @@ async function speak(
     pitch: 1.0,
     volume: 1.0,
     voice: voz,
-    queueStrategy: 0,
+    queueStrategy: QueueStrategy.Flush,
   }).catch(onPlaybackError);
 }
 
