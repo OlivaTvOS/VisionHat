@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CapacitorHttp } from "@capacitor/core";
+import { TextToSpeech } from "@capacitor-community/text-to-speech";
 
 type CameraStatus = {
   status?: string;
@@ -23,7 +24,7 @@ const DEVICE_KEY = "visionhat-device-id";
 
 function cameraUrl(value: string): string {
   const address = value.trim();
-  if (!address) throw new Error("Informe o endereço IP da câmera.");
+  if (!address) throw new Error("Informe o endereço ou nome local da câmera.");
   const normalized = /^https?:\/\//i.test(address) ? address : "http://" + address;
   const parsed = new URL(normalized);
   if (parsed.protocol !== "http:") {
@@ -58,19 +59,40 @@ function responseMessage(data: unknown, status: number): string {
   return "A câmera respondeu com HTTP " + status + ".";
 }
 
-function speak(text: string): boolean {
-  if (!("speechSynthesis" in window)) return false;
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "pt-BR";
-  utterance.rate = 1;
-  utterance.pitch = 1;
-  window.speechSynthesis.speak(utterance);
-  return true;
+async function speak(
+  text: string,
+  onPlaybackError: (error: unknown) => void
+): Promise<void> {
+  const texto = text.trim();
+
+  if (!texto) {
+    throw new Error("Não há texto disponível para leitura.");
+  }
+
+  const idioma = await TextToSpeech.isLanguageSupported({ lang: "pt-BR" });
+
+  if (!idioma.supported) {
+    throw new Error(
+      "O Android não encontrou uma voz em português do Brasil. " +
+      "Instale ou atualize o mecanismo de texto para fala do Google e baixe a voz Português (Brasil) nas configurações de Texto para fala."
+    );
+  }
+
+  await TextToSpeech.stop();
+
+  // A Promise do plugin só termina quando a fala acaba. Não aguardamos
+  // a reprodução para deixar o botão de captura disponível novamente.
+  void TextToSpeech.speak({
+    text: texto,
+    lang: "pt-BR",
+    rate: 0.95,
+    pitch: 1.0,
+    volume: 1.0,
+  }).catch(onPlaybackError);
 }
 
 export default function App() {
-  const [cameraAddress, setCameraAddress] = useState(() => localStorage.getItem(CAMERA_KEY) || "");
+  const [cameraAddress, setCameraAddress] = useState(() => localStorage.getItem(CAMERA_KEY) || "visionhat-camera.local");
   const [deviceId, setDeviceId] = useState(() => localStorage.getItem(DEVICE_KEY) || "");
   const [connection, setConnection] = useState<"unknown" | "checking" | "online" | "offline">("unknown");
   const [busy, setBusy] = useState(false);
@@ -81,7 +103,7 @@ export default function App() {
   useEffect(() => { localStorage.setItem(CAMERA_KEY, cameraAddress); }, [cameraAddress]);
   useEffect(() => { localStorage.setItem(DEVICE_KEY, deviceId); }, [deviceId]);
   useEffect(() => () => {
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    void TextToSpeech.stop().catch(() => undefined);
   }, []);
 
   async function testConnection() {
@@ -138,7 +160,7 @@ export default function App() {
     setError("");
     setResult(null);
     setMessage("Solicitando fotografia à câmera...");
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    void TextToSpeech.stop().catch(() => undefined);
 
     let cameraResponded = false;
     try {
@@ -160,9 +182,22 @@ export default function App() {
 
       setResult(analysis);
       setConnection("online");
-      setMessage("Análise concluída.");
-      if (!speak(analysis.descricao)) {
-        setMessage("Análise concluída. Leitura em voz alta indisponível neste aparelho.");
+      setMessage("Análise concluída. Iniciando leitura em voz alta...");
+
+      const informarFalhaDeAudio = (audioError: unknown) => {
+        setMessage("Análise concluída, mas não foi possível reproduzir o áudio.");
+        setError(
+          audioError instanceof Error
+            ? audioError.message
+            : "Verifique o mecanismo de texto para fala do Android."
+        );
+      };
+
+      try {
+        await speak(analysis.descricao, informarFalhaDeAudio);
+        setMessage("Análise concluída. Reproduzindo descrição.");
+      } catch (audioError) {
+        informarFalhaDeAudio(audioError);
       }
     } catch (err) {
       setConnection(cameraResponded ? "online" : "offline");
@@ -173,13 +208,36 @@ export default function App() {
     }
   }
 
-  function speakAgain() {
+  async function speakAgain() {
     if (!result) return;
-    if (!speak(result.descricao)) setError("A leitura em voz alta não está disponível neste dispositivo.");
+
+    setError("");
+    setMessage("Iniciando leitura da descrição.");
+
+    const informarFalhaDeAudio = (audioError: unknown) => {
+      setMessage("Não foi possível reproduzir o áudio.");
+      setError(
+        audioError instanceof Error
+          ? audioError.message
+          : "Verifique o mecanismo de texto para fala do Android."
+      );
+    };
+
+    try {
+      await speak(result.descricao, informarFalhaDeAudio);
+      setMessage("Reproduzindo descrição.");
+    } catch (audioError) {
+      informarFalhaDeAudio(audioError);
+    }
   }
 
-  function stopSpeech() {
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  async function stopSpeech() {
+    try {
+      await TextToSpeech.stop();
+      setMessage("Leitura interrompida.");
+    } catch {
+      setError("Não foi possível interromper a leitura de voz.");
+    }
   }
 
   const canCapture = !busy && cameraAddress.trim().length > 0 && deviceId.trim().length > 0;
@@ -238,11 +296,11 @@ export default function App() {
         </div>
 
         <label className="field">
-          <span>Endereço IP da câmera</span>
+          <span>Endereço da câmera (nome ou IP)</span>
           <input
             value={cameraAddress}
             onChange={(event) => { setCameraAddress(event.target.value); setConnection("unknown"); }}
-            placeholder="Ex.: 192.168.1.50"
+            placeholder="visionhat-camera.local"
             inputMode="url"
             autoCapitalize="none"
             autoCorrect="off"

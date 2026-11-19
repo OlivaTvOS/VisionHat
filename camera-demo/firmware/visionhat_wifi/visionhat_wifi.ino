@@ -3,6 +3,7 @@
 #include <WebServer.h>
 #include <WiFiClientSecure.h>
 #include <HTTPClient.h>
+#include <ESPmDNS.h>
 #include "wifi_config.h"
 
 // ==========================================
@@ -36,6 +37,7 @@ const char* API_URL = "https://visionhat-api.onrender.com/analises/imagem";
 
 WebServer servidor(80);
 bool cameraPronta = false;
+bool mdnsIniciado = false;
 unsigned long ultimaTentativaWiFi = 0;
 const unsigned long intervaloReconexao = 10000;
 
@@ -105,6 +107,27 @@ void conectarWiFi() {
   } else {
     Serial.println("ERRO_WIFI");
     Serial.println("O firmware continuará tentando reconectar.");
+  }
+}
+
+// ==========================================
+ // DESCOBERTA AUTOMÁTICA POR NOME (mDNS)
+ // O app pode usar http://visionhat-camera.local
+ // em vez de depender do IP distribuído pelo DHCP.
+ // ==========================================
+
+void iniciarMdns() {
+  if (WiFi.status() != WL_CONNECTED || mdnsIniciado) {
+    return;
+  }
+
+  if (MDNS.begin("visionhat-camera")) {
+    MDNS.addService("http", "tcp", 80);
+    mdnsIniciado = true;
+    Serial.println("MDNS_INICIADO");
+    Serial.println("ENDERECO_FIXO: http://visionhat-camera.local");
+  } else {
+    Serial.println("ERRO_MDNS");
   }
 }
 
@@ -395,6 +418,7 @@ void setup() {
   cameraPronta = true;
 
   conectarWiFi();
+  iniciarMdns();
   iniciarServidor();
 
   Serial.println("CAMERA_OK");
@@ -408,11 +432,21 @@ void setup() {
 void loop() {
   servidor.handleClient();
 
-  if (WiFi.status() != WL_CONNECTED
-      && millis() - ultimaTentativaWiFi >= intervaloReconexao) {
-    ultimaTentativaWiFi = millis();
-    Serial.println("WI-FI_DESCONECTADO_RECONEXAO");
-    WiFi.reconnect();
+  if (WiFi.status() != WL_CONNECTED) {
+    // Encerra o anúncio antigo para poder publicá-lo novamente após reconectar.
+    if (mdnsIniciado) {
+      MDNS.end();
+      mdnsIniciado = false;
+    }
+
+    if (millis() - ultimaTentativaWiFi >= intervaloReconexao) {
+      ultimaTentativaWiFi = millis();
+      Serial.println("WI-FI_DESCONECTADO_RECONEXAO");
+      WiFi.reconnect();
+    }
+  } else {
+    // Inicia o anúncio também se o Wi-Fi só conectar após a inicialização.
+    iniciarMdns();
   }
 
   delay(2);
