@@ -12,7 +12,7 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-    @Value("${app.cors.allowed-origins:http://localhost:5173}")
+    @Value("${app.cors.allowed-origins:https://*.vercel.app}")
     private String allowedOrigins;
 
     @Bean
@@ -23,7 +23,7 @@ public class CorsConfig {
             origens[i] = origens[i].trim();
         }
 
-        configuracao.setAllowedOrigins(Arrays.asList(origens));
+        configuracao.setAllowedOriginPatterns(Arrays.asList(origens));
         configuracao.setAllowedMethods(Arrays.asList(
                 "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuracao.setAllowedHeaders(Arrays.asList("*"));
