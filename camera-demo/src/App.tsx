@@ -23,7 +23,7 @@ const DEVICE_KEY = "visionhat-device-id";
 
 function cameraUrl(value: string): string {
   const address = value.trim();
-  if (!address) throw new Error("Informe o endereço IP da câmera.");
+  if (!address) throw new Error("Informe o endereço ou nome local da câmera.");
   const normalized = /^https?:\/\//i.test(address) ? address : "http://" + address;
   const parsed = new URL(normalized);
   if (parsed.protocol !== "http:") {
@@ -70,7 +70,7 @@ function speak(text: string): boolean {
 }
 
 export default function App() {
-  const [cameraAddress, setCameraAddress] = useState(() => localStorage.getItem(CAMERA_KEY) || "");
+  const [cameraAddress, setCameraAddress] = useState(() => localStorage.getItem(CAMERA_KEY) || "visionhat-camera.local");
   const [deviceId, setDeviceId] = useState(() => localStorage.getItem(DEVICE_KEY) || "");
   const [connection, setConnection] = useState<"unknown" | "checking" | "online" | "offline">("unknown");
   const [busy, setBusy] = useState(false);
@@ -238,11 +238,11 @@ export default function App() {
         </div>
 
         <label className="field">
-          <span>Endereço IP da câmera</span>
+          <span>Endereço da câmera (nome ou IP)</span>
           <input
             value={cameraAddress}
             onChange={(event) => { setCameraAddress(event.target.value); setConnection("unknown"); }}
-            placeholder="Ex.: 192.168.1.50"
+            placeholder="visionhat-camera.local"
             inputMode="url"
             autoCapitalize="none"
             autoCorrect="off"
