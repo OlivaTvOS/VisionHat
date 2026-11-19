@@ -35,7 +35,7 @@ public class AiService {
             @Value("${ai.provider:gemini}") String provedorPrincipal,
             @Value("${ai.fallback-providers:}") String provedoresAlternativos,
             @Value("${gemini.api-key:}") String geminiApiKey,
-            @Value("${gemini.model:gemini-2.5-flash}") String geminiModelo,
+            @Value("${gemini.model:gemini-3.5-flash-lite}") String geminiModelo,
             @Value("${gemini.api-url:https://generativelanguage.googleapis.com}") String geminiApiUrl,
             @Value("${claude.api-key:}") String claudeApiKey,
             @Value("${claude.model:}") String claudeModelo,
@@ -232,16 +232,41 @@ public class AiService {
             int status = e.getStatusCode().value();
             String resposta = e.getResponseBodyAsString();
             boolean deveAlternar = indicaLimiteOuCota(nomeProvedor, status, resposta);
-            throw new AiException(
-                    "A API " + nomeProvedor + " recusou a solicitação.",
-                    e,
-                    deveAlternar);
+            String detalhe = extrairDetalheErro(resposta);
+            String mensagem = "A API " + nomeProvedor
+                    + " recusou a solicitação (HTTP " + status + ").";
+            if (!detalhe.isBlank()) {
+                mensagem += " " + detalhe;
+            }
+            throw new AiException(mensagem, e, deveAlternar);
         } catch (RestClientException e) {
             throw new AiException(
                     "Não foi possível estabelecer comunicação com a API " + nomeProvedor + ".",
                     e,
                     false);
         }
+    }
+
+    private String extrairDetalheErro(String resposta) {
+        if (resposta == null || resposta.isBlank()) {
+            return "";
+        }
+
+        try {
+            JsonNode raiz = objectMapper.readTree(resposta);
+            JsonNode erro = raiz.path("error");
+            String mensagem = erro.path("message").asText();
+            String status = erro.path("status").asText();
+
+            if (!mensagem.isBlank()) {
+                return status.isBlank() ? mensagem : status + ": " + mensagem;
+            }
+        } catch (Exception ignored) {
+            // Algumas respostas de erro podem não estar em JSON.
+        }
+
+        String texto = resposta.replaceAll("\\s+", " ").trim();
+        return texto.length() > 400 ? texto.substring(0, 400) : texto;
     }
 
     private boolean indicaLimiteOuCota(String provedor, int status, String resposta) {
