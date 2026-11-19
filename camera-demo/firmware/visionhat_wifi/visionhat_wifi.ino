@@ -3,6 +3,7 @@
 #include <WebServer.h>
 #include <WiFiClientSecure.h>
 #include <HTTPClient.h>
+#include <ESPmDNS.h>
 #include "wifi_config.h"
 
 // ==========================================
@@ -36,6 +37,7 @@ const char* API_URL = "https://visionhat-api.onrender.com/api/analises/imagem";
 
 WebServer servidor(80);
 bool cameraPronta = false;
+bool mdnsIniciado = false;
 unsigned long ultimaTentativaWiFi = 0;
 const unsigned long intervaloReconexao = 10000;
 
@@ -105,6 +107,27 @@ void conectarWiFi() {
   } else {
     Serial.println("ERRO_WIFI");
     Serial.println("O firmware continuará tentando reconectar.");
+  }
+}
+
+// ==========================================
+ // DESCOBERTA AUTOMÁTICA POR NOME (mDNS)
+ // O app pode usar http://visionhat-camera.local
+ // em vez de depender do IP distribuído pelo DHCP.
+ // ==========================================
+
+void iniciarMdns() {
+  if (WiFi.status() != WL_CONNECTED || mdnsIniciado) {
+    return;
+  }
+
+  if (MDNS.begin("visionhat-camera")) {
+    MDNS.addService("http", "tcp", 80);
+    mdnsIniciado = true;
+    Serial.println("MDNS_INICIADO");
+    Serial.println("ENDERECO_FIXO: http://visionhat-camera.local");
+  } else {
+    Serial.println("ERRO_MDNS");
   }
 }
 
@@ -395,6 +418,7 @@ void setup() {
   cameraPronta = true;
 
   conectarWiFi();
+  iniciarMdns();
   iniciarServidor();
 
   Serial.println("CAMERA_OK");
@@ -414,6 +438,10 @@ void loop() {
     Serial.println("WI-FI_DESCONECTADO_RECONEXAO");
     WiFi.reconnect();
   }
+
+  // Caso o Wi-Fi tenha caído durante a inicialização, publica o nome
+  // assim que a reconexão for concluída.
+  iniciarMdns();
 
   delay(2);
 }
