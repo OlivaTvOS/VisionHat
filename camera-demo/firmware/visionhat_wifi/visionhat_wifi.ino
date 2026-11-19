@@ -33,7 +33,7 @@
 // CONFIGURAÇÃO DA API
 // ==========================================
 
-const char* API_URL = "https://visionhat-api.onrender.com/analises/imagem";
+const char* API_URL = "https://visionhat-api.onrender.com/api/analises/imagem";
 
 WebServer servidor(80);
 bool cameraPronta = false;
