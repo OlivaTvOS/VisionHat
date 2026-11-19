@@ -35,7 +35,7 @@ public class AiService {
             @Value("${ai.provider:gemini}") String provedorPrincipal,
             @Value("${ai.fallback-providers:}") String provedoresAlternativos,
             @Value("${gemini.api-key:}") String geminiApiKey,
-            @Value("${gemini.model:gemini-3.5-flash-lite}") String geminiModelo,
+            @Value("${gemini.model:gemini-3.8-flash}") String geminiModelo,
             @Value("${gemini.api-url:https://generativelanguage.googleapis.com}") String geminiApiUrl,
             @Value("${claude.api-key:}") String claudeApiKey,
             @Value("${claude.model:}") String claudeModelo,
