@@ -135,9 +135,17 @@ async function speak(
 }
 
 async function descobrirCamera(enderecoAtual: string): Promise<{ base: string; status: CameraStatus }> {
-  const principal = cameraUrl(enderecoAtual || CAMERA_MDNS);
-  const mdns = cameraUrl(CAMERA_MDNS);
-  const candidatos = [...new Set([principal, mdns])];
+  const candidatos: string[] = [];
+
+  for (const endereco of [enderecoAtual, CAMERA_MDNS]) {
+    try {
+      const base = cameraUrl(endereco || CAMERA_MDNS);
+      if (!candidatos.includes(base)) candidatos.push(base);
+    } catch {
+      // Um endereço salvo incorretamente não impede a tentativa pelo nome mDNS.
+    }
+  }
+
   let ultimoErro: unknown = null;
 
   for (const base of candidatos) {
