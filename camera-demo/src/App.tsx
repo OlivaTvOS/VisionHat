@@ -18,13 +18,26 @@ type AnalysisResult = {
 };
 
 type ApiError = { erro?: string; detail?: string; message?: string };
+type UserResponse = { idUsuario: number; nome?: string; email?: string };
+type Device = {
+  idDispositivo: number;
+  idUsuario: number;
+  identificador: string;
+  modelo: string;
+  status: string;
+};
 
+const API_BASE = "https://visionhat-api.onrender.com";
 const CAMERA_KEY = "visionhat-camera-address";
 const DEVICE_KEY = "visionhat-device-id";
+const USER_EMAIL_KEY = "visionhat-user-email";
+const CAMERA_MDNS = "visionhat-camera.local";
+
+let offlineVoiceIndex: number | null = null;
 
 function cameraUrl(value: string): string {
   const address = value.trim();
-  if (!address) throw new Error("Informe o endereço ou nome local da câmera.");
+  if (!address) throw new Error("O endereço da câmera não foi informado.");
   const normalized = /^https?:\/\//i.test(address) ? address : "http://" + address;
   const parsed = new URL(normalized);
   if (parsed.protocol !== "http:") {
@@ -34,29 +47,69 @@ function cameraUrl(value: string): string {
 }
 
 function parseResponseData<T>(data: unknown): T {
-  if (typeof data === "string") {
-    return JSON.parse(data) as T;
-  }
+  if (typeof data === "string") return JSON.parse(data) as T;
   return data as T;
 }
 
-function responseMessage(data: unknown, status: number): string {
+function responseMessage(data: unknown, status: number, source = "A câmera"): string {
   if (typeof data === "string") {
-    const body = data;
     try {
-      const parsed = JSON.parse(body) as unknown;
-      return responseMessage(parsed, status);
+      return responseMessage(JSON.parse(data) as unknown, status, source);
     } catch {
-      return body || "A câmera respondeu com HTTP " + status + ".";
+      return data || source + " respondeu com HTTP " + status + ".";
     }
   }
-
   if (data && typeof data === "object") {
     const error = data as ApiError;
-    return error.erro || error.detail || error.message || "A câmera respondeu com HTTP " + status + ".";
+    return error.erro || error.detail || error.message || source + " respondeu com HTTP " + status + ".";
+  }
+  return source + " respondeu com HTTP " + status + ".";
+}
+
+function esperar(ms: number): Promise<void> {
+  return new Promise(resolve => window.setTimeout(resolve, ms));
+}
+
+async function encontrarVozOfflinePtBr(): Promise<number> {
+  if (offlineVoiceIndex !== null) return offlineVoiceIndex;
+
+  const limite = Date.now() + 12000;
+  let idiomaEncontrado = false;
+
+  while (Date.now() < limite) {
+    try {
+      const resposta = await TextToSpeech.getSupportedVoices();
+      const vozes = resposta.voices || [];
+      const indice = vozes.findIndex(voz => {
+        const idioma = voz.lang.toLowerCase().replace("_", "-");
+        return idioma.startsWith("pt-br") && voz.localService;
+      });
+
+      if (indice >= 0) {
+        offlineVoiceIndex = indice;
+        return indice;
+      }
+
+      const idioma = await TextToSpeech.isLanguageSupported({ lang: "pt-BR" });
+      idiomaEncontrado = idioma.supported;
+    } catch {
+      // O mecanismo Android pode ainda estar inicializando.
+    }
+
+    await esperar(350);
   }
 
-  return "A câmera respondeu com HTTP " + status + ".";
+  if (idiomaEncontrado) {
+    throw new Error(
+      "O Android reconheceu português, mas não encontrou uma voz pt-BR disponível offline. " +
+      "Nas configurações de Texto para fala, baixe os dados de voz Português (Brasil)."
+    );
+  }
+
+  throw new Error(
+    "O mecanismo de voz do Android não ficou pronto. Abra as configurações de Texto para fala, " +
+    "selecione o mecanismo Google e confirme que a voz Português (Brasil) está instalada."
+  );
 }
 
 async function speak(
@@ -64,61 +117,30 @@ async function speak(
   onPlaybackError: (error: unknown) => void
 ): Promise<void> {
   const texto = text.trim();
+  if (!texto) throw new Error("Não há texto disponível para leitura.");
 
-  if (!texto) {
-    throw new Error("Não há texto disponível para leitura.");
-  }
+  const voz = await encontrarVozOfflinePtBr();
 
-  const idioma = await TextToSpeech.isLanguageSupported({ lang: "pt-BR" });
-
-  if (!idioma.supported) {
-    throw new Error(
-      "O Android não encontrou uma voz em português do Brasil. " +
-      "Instale ou atualize o mecanismo de texto para fala do Google e baixe a voz Português (Brasil) nas configurações de Texto para fala."
-    );
-  }
-
-  await TextToSpeech.stop();
-
-  // A Promise do plugin só termina quando a fala acaba. Não aguardamos
-  // a reprodução para deixar o botão de captura disponível novamente.
+  // QueueStrategy.Flush (0) faz o próprio plugin interromper a fala anterior.
+  // Não chamamos stop() antes: essa chamada também falha quando o TTS ainda inicializa.
   void TextToSpeech.speak({
     text: texto,
     lang: "pt-BR",
     rate: 0.95,
     pitch: 1.0,
     volume: 1.0,
+    voice: voz,
+    queueStrategy: 0,
   }).catch(onPlaybackError);
 }
 
-export default function App() {
-  const [cameraAddress, setCameraAddress] = useState(() => localStorage.getItem(CAMERA_KEY) || "visionhat-camera.local");
-  const [deviceId, setDeviceId] = useState(() => localStorage.getItem(DEVICE_KEY) || "");
-  const [connection, setConnection] = useState<"unknown" | "checking" | "online" | "offline">("unknown");
-  const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState("Configure a câmera para começar.");
-  const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [error, setError] = useState("");
+async function descobrirCamera(enderecoAtual: string): Promise<{ base: string; status: CameraStatus }> {
+  const principal = cameraUrl(enderecoAtual || CAMERA_MDNS);
+  const mdns = cameraUrl(CAMERA_MDNS);
+  const candidatos = [...new Set([principal, mdns])];
+  let ultimoErro: unknown = null;
 
-  useEffect(() => { localStorage.setItem(CAMERA_KEY, cameraAddress); }, [cameraAddress]);
-  useEffect(() => { localStorage.setItem(DEVICE_KEY, deviceId); }, [deviceId]);
-  useEffect(() => () => {
-    void TextToSpeech.stop().catch(() => undefined);
-  }, []);
-
-  async function testConnection() {
-    let base: string;
-    try {
-      base = cameraUrl(cameraAddress);
-    } catch (err) {
-      setConnection("offline");
-      setError(err instanceof Error ? err.message : "Endereço da câmera inválido.");
-      return;
-    }
-
-    setConnection("checking");
-    setError("");
-    setMessage("Verificando conexão com a câmera...");
+  for (const base of candidatos) {
     try {
       const response = await CapacitorHttp.get({
         url: base + "/status",
@@ -128,50 +150,167 @@ export default function App() {
       if (response.status < 200 || response.status >= 300) {
         throw new Error(responseMessage(response.data, response.status));
       }
+
       const status = parseResponseData<CameraStatus>(response.data);
       if (status.status !== "online" || status.camera !== "ready" || status.wifi !== "connected") {
-        throw new Error("A câmera respondeu, mas a câmera ou a conexão Wi-Fi ainda não está pronta.");
+        throw new Error("A câmera respondeu, mas ainda não está pronta ou conectada ao Wi-Fi.");
       }
+
+      return { base, status };
+    } catch (error) {
+      ultimoErro = error;
+    }
+  }
+
+  throw ultimoErro instanceof Error
+    ? ultimoErro
+    : new Error("Não foi possível localizar a ESP32-CAM. Verifique se o celular está na mesma rede.");
+}
+
+export default function App() {
+  const [cameraAddress, setCameraAddress] = useState(() => localStorage.getItem(CAMERA_KEY) || CAMERA_MDNS);
+  const [deviceId, setDeviceId] = useState(() => localStorage.getItem(DEVICE_KEY) || "");
+  const [loginEmail, setLoginEmail] = useState(() => localStorage.getItem(USER_EMAIL_KEY) || "");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [accountName, setAccountName] = useState("");
+  const [devices, setDevices] = useState<Device[]>([]);
+  const [loginBusy, setLoginBusy] = useState(false);
+  const [accountError, setAccountError] = useState("");
+  const [connection, setConnection] = useState<"unknown" | "checking" | "online" | "offline">("unknown");
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("Entre na sua conta e conecte a câmera para começar.");
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => { localStorage.setItem(CAMERA_KEY, cameraAddress); }, [cameraAddress]);
+  useEffect(() => {
+    if (deviceId) localStorage.setItem(DEVICE_KEY, deviceId);
+    else localStorage.removeItem(DEVICE_KEY);
+  }, [deviceId]);
+  useEffect(() => {
+    if (loginEmail) localStorage.setItem(USER_EMAIL_KEY, loginEmail);
+  }, [loginEmail]);
+
+  useEffect(() => () => {
+    void TextToSpeech.stop().catch(() => undefined);
+  }, []);
+
+  async function login() {
+    if (!loginEmail.trim() || !loginPassword) {
+      setAccountError("Informe o e-mail e a senha da sua conta VisionHat.");
+      return;
+    }
+
+    setLoginBusy(true);
+    setAccountError("");
+    setError("");
+
+    try {
+      const loginResponse = await CapacitorHttp.post({
+        url: API_BASE + "/api/usuarios/login",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        data: { email: loginEmail.trim(), senhaHash: loginPassword },
+        connectTimeout: 15000,
+        readTimeout: 30000,
+      });
+
+      if (loginResponse.status < 200 || loginResponse.status >= 300) {
+        throw new Error(responseMessage(loginResponse.data, loginResponse.status, "A API"));
+      }
+
+      const usuario = parseResponseData<UserResponse>(loginResponse.data);
+      if (!Number.isInteger(usuario.idUsuario) || usuario.idUsuario <= 0) {
+        throw new Error("A API autenticou a conta, mas não retornou um ID de usuário válido.");
+      }
+
+      const dispositivosResponse = await CapacitorHttp.get({
+        url: API_BASE + "/api/dispositivos/usuario/" + usuario.idUsuario,
+        headers: { Accept: "application/json" },
+        connectTimeout: 15000,
+        readTimeout: 30000,
+      });
+
+      if (dispositivosResponse.status < 200 || dispositivosResponse.status >= 300) {
+        throw new Error(responseMessage(dispositivosResponse.data, dispositivosResponse.status, "A API"));
+      }
+
+      const lista = parseResponseData<Device[]>(dispositivosResponse.data);
+      const ativos = (Array.isArray(lista) ? lista : []).filter(dispositivo =>
+        String(dispositivo.status).toUpperCase() !== "I"
+      );
+
+      if (ativos.length === 0) {
+        throw new Error("Login realizado, mas esta conta não possui um dispositivo ativo cadastrado na API.");
+      }
+
+      setDevices(ativos);
+      setDeviceId(String(ativos[0].idDispositivo));
+      setAccountName(usuario.nome || usuario.email || loginEmail.trim());
+      setLoginPassword("");
+      setMessage(
+        ativos.length === 1
+          ? "Conta conectada. Dispositivo VisionHat localizado automaticamente."
+          : ativos.length + " dispositivos encontrados. Selecione o que será usado na demonstração."
+      );
+    } catch (loginError) {
+      setAccountError(loginError instanceof Error ? loginError.message : "Não foi possível entrar na conta.");
+    } finally {
+      setLoginBusy(false);
+    }
+  }
+
+  function logout() {
+    setAccountName("");
+    setDevices([]);
+    setDeviceId("");
+    setLoginPassword("");
+    setAccountError("");
+  }
+
+  async function testConnection() {
+    setConnection("checking");
+    setError("");
+    setMessage("Localizando a câmera na rede...");
+
+    try {
+      const { base, status } = await descobrirCamera(cameraAddress);
+      const ip = status.ip || new URL(base).hostname;
+      setCameraAddress(ip);
       setConnection("online");
-      setMessage("Câmera conectada · IP " + (status.ip || "local"));
-    } catch (err) {
+      setMessage("Câmera conectada · IP " + ip);
+    } catch (connectionError) {
       setConnection("offline");
-      setMessage("Não foi possível conectar à câmera.");
-      setError(err instanceof Error ? err.message : "Verifique o IP e a rede Wi-Fi.");
+      setMessage("Não foi possível localizar a câmera.");
+      setError(connectionError instanceof Error ? connectionError.message : "Verifique a rede Wi-Fi da ESP32-CAM.");
     }
   }
 
   async function capture() {
     const parsedId = Number(deviceId);
     if (!Number.isInteger(parsedId) || parsedId <= 0) {
-      setError("Informe o ID de um dispositivo VisionHat já cadastrado.");
-      return;
-    }
-
-    let base: string;
-    try {
-      base = cameraUrl(cameraAddress);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Endereço da câmera inválido.");
+      setError("Entre na conta VisionHat para localizar o dispositivo, ou informe um ID cadastrado.");
       return;
     }
 
     setBusy(true);
     setError("");
     setResult(null);
-    setMessage("Solicitando fotografia à câmera...");
+    setMessage("Localizando a câmera...");
     void TextToSpeech.stop().catch(() => undefined);
 
-    let cameraResponded = false;
+    let cameraFound = false;
     try {
+      const { base, status } = await descobrirCamera(cameraAddress);
+      cameraFound = true;
+      setConnection("online");
+      if (status.ip) setCameraAddress(status.ip);
+
       setMessage("A câmera está capturando e enviando a imagem para análise...");
       const response = await CapacitorHttp.post({
         url: base + "/capture?idDispositivo=" + parsedId,
         connectTimeout: 20000,
         readTimeout: 180000,
       });
-      cameraResponded = true;
-      setConnection("online");
 
       if (response.status < 200 || response.status >= 300) {
         throw new Error(responseMessage(response.data, response.status));
@@ -182,14 +321,14 @@ export default function App() {
 
       setResult(analysis);
       setConnection("online");
-      setMessage("Análise concluída. Iniciando leitura em voz alta...");
+      setMessage("Análise concluída. Preparando voz local em português...");
 
       const informarFalhaDeAudio = (audioError: unknown) => {
         setMessage("Análise concluída, mas não foi possível reproduzir o áudio.");
         setError(
           audioError instanceof Error
             ? audioError.message
-            : "Verifique o mecanismo de texto para fala do Android."
+            : "Verifique se existe uma voz pt-BR instalada para uso offline."
         );
       };
 
@@ -199,10 +338,10 @@ export default function App() {
       } catch (audioError) {
         informarFalhaDeAudio(audioError);
       }
-    } catch (err) {
-      setConnection(cameraResponded ? "online" : "offline");
+    } catch (captureError) {
+      setConnection(cameraFound ? "online" : "offline");
       setMessage("Não foi possível concluir a captura.");
-      setError(err instanceof Error ? err.message : "Falha ao comunicar com a câmera.");
+      setError(captureError instanceof Error ? captureError.message : "Falha ao comunicar com a câmera ou com a API.");
     } finally {
       setBusy(false);
     }
@@ -210,17 +349,12 @@ export default function App() {
 
   async function speakAgain() {
     if (!result) return;
-
     setError("");
-    setMessage("Iniciando leitura da descrição.");
+    setMessage("Preparando leitura da descrição...");
 
     const informarFalhaDeAudio = (audioError: unknown) => {
       setMessage("Não foi possível reproduzir o áudio.");
-      setError(
-        audioError instanceof Error
-          ? audioError.message
-          : "Verifique o mecanismo de texto para fala do Android."
-      );
+      setError(audioError instanceof Error ? audioError.message : "Verifique a voz pt-BR instalada.");
     };
 
     try {
@@ -252,9 +386,69 @@ export default function App() {
         </div>
         <div className={"connection-pill " + connection} role="status" aria-live="polite">
           <span className="connection-dot" />
-          {connection === "online" ? "Conectada" : connection === "checking" ? "Verificando" : connection === "offline" ? "Desconectada" : "Não verificada"}
+          {connection === "online" ? "Conectada" : connection === "checking" ? "Localizando" : connection === "offline" ? "Desconectada" : "Não verificada"}
         </div>
       </header>
+
+      <section className="settings-card" aria-label="Conta VisionHat">
+        <div className="settings-heading">
+          <div>
+            <h2>Conta VisionHat</h2>
+            <p>Entre para localizar automaticamente seu dispositivo cadastrado.</p>
+          </div>
+          {accountName && <button className="text-button" type="button" onClick={logout}>Sair</button>}
+        </div>
+
+        {accountName ? (
+          <p className="account-caption">Conectado como <strong>{accountName}</strong></p>
+        ) : (
+          <>
+            <label className="field">
+              <span>E-mail</span>
+              <input
+                type="email"
+                value={loginEmail}
+                onChange={event => setLoginEmail(event.target.value)}
+                placeholder="seu@email.com"
+                autoCapitalize="none"
+                autoCorrect="off"
+              />
+            </label>
+            <label className="field">
+              <span>Senha</span>
+              <input
+                type="password"
+                value={loginPassword}
+                onChange={event => setLoginPassword(event.target.value)}
+                placeholder="Senha da conta"
+                autoCapitalize="none"
+              />
+            </label>
+            <button className="text-button login-button" type="button" onClick={login} disabled={loginBusy}>
+              {loginBusy ? "Entrando e buscando dispositivo..." : "Entrar e localizar dispositivo"}
+            </button>
+          </>
+        )}
+
+        {devices.length > 1 && (
+          <label className="field">
+            <span>Dispositivo da demonstração</span>
+            <select
+              className="field-select"
+              value={deviceId}
+              onChange={event => setDeviceId(event.target.value)}
+            >
+              {devices.map(dispositivo => (
+                <option key={dispositivo.idDispositivo} value={String(dispositivo.idDispositivo)}>
+                  {dispositivo.identificador || dispositivo.modelo || "VisionHat"} · #{dispositivo.idDispositivo}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+
+        {accountError && <p className="error-message" role="alert">{accountError}</p>}
+      </section>
 
       <section className="capture-panel" aria-labelledby="capture-title">
         <p className="eyebrow">CAPTURA ASSISTIDA</p>
@@ -288,19 +482,19 @@ export default function App() {
         <div className="settings-heading">
           <div>
             <h2>Conexão</h2>
-            <p>Configure uma vez. Os dados ficam salvos neste celular.</p>
+            <p>O app procura o nome local e preenche o IP encontrado.</p>
           </div>
           <button className="text-button" type="button" onClick={testConnection} disabled={connection === "checking" || busy}>
-            {connection === "checking" ? "Verificando..." : "Testar conexão"}
+            {connection === "checking" ? "Localizando..." : "Localizar câmera"}
           </button>
         </div>
 
         <label className="field">
-          <span>Endereço da câmera (nome ou IP)</span>
+          <span>IP/endereço da câmera</span>
           <input
             value={cameraAddress}
-            onChange={(event) => { setCameraAddress(event.target.value); setConnection("unknown"); }}
-            placeholder="visionhat-camera.local"
+            onChange={event => { setCameraAddress(event.target.value); setConnection("unknown"); }}
+            placeholder={CAMERA_MDNS}
             inputMode="url"
             autoCapitalize="none"
             autoCorrect="off"
@@ -309,14 +503,15 @@ export default function App() {
         </label>
 
         <label className="field">
-          <span>ID do dispositivo cadastrado</span>
+          <span>ID do dispositivo</span>
           <input
             value={deviceId}
-            onChange={(event) => setDeviceId(event.target.value.replace(/[^0-9]/g, ""))}
-            placeholder="Ex.: 1"
+            onChange={event => setDeviceId(event.target.value.replace(/[^0-9]/g, ""))}
+            placeholder="Preenchido após o login"
             inputMode="numeric"
             type="number"
             min="1"
+            readOnly={devices.length === 1}
           />
         </label>
 
