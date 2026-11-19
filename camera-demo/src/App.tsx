@@ -382,6 +382,25 @@ export default function App() {
     }
   }
 
+  async function testVoice() {
+    setError("");
+    setMessage("Testando a voz local em português brasileiro...");
+    const informarFalhaDeAudio = (audioError: unknown) => {
+      setMessage("O teste de voz não conseguiu iniciar.");
+      setError(audioError instanceof Error ? audioError.message : "Verifique a voz pt-BR offline instalada.");
+    };
+
+    try {
+      await speak(
+        "VisionHat ativo. Este é um teste de áudio em português brasileiro. A síntese de voz está sendo executada localmente no aparelho.",
+        informarFalhaDeAudio
+      );
+      setMessage("Teste de voz iniciado. Nenhuma chamada de análise foi realizada.");
+    } catch (audioError) {
+      informarFalhaDeAudio(audioError);
+    }
+  }
+
   const canCapture = !busy && cameraAddress.trim().length > 0 && deviceId.trim().length > 0;
 
   return (
@@ -522,6 +541,10 @@ export default function App() {
             readOnly={devices.length === 1}
           />
         </label>
+
+        <button className="text-button login-button" type="button" onClick={testVoice}>
+          Testar voz local · sem consumir IA
+        </button>
 
         {error && <p className="error-message" role="alert">{error}</p>}
       </section>
