@@ -59,7 +59,10 @@ function responseMessage(data: unknown, status: number): string {
   return "A câmera respondeu com HTTP " + status + ".";
 }
 
-async function speak(text: string): Promise<void> {
+async function speak(
+  text: string,
+  onPlaybackError: (error: unknown) => void
+): Promise<void> {
   const texto = text.trim();
 
   if (!texto) {
@@ -76,13 +79,16 @@ async function speak(text: string): Promise<void> {
   }
 
   await TextToSpeech.stop();
-  await TextToSpeech.speak({
+
+  // A Promise do plugin só termina quando a fala acaba. Não aguardamos
+  // a reprodução para deixar o botão de captura disponível novamente.
+  void TextToSpeech.speak({
     text: texto,
     lang: "pt-BR",
     rate: 0.95,
     pitch: 1.0,
     volume: 1.0,
-  });
+  }).catch(onPlaybackError);
 }
 
 export default function App() {
@@ -178,16 +184,20 @@ export default function App() {
       setConnection("online");
       setMessage("Análise concluída. Iniciando leitura em voz alta...");
 
-      try {
-        await speak(analysis.descricao);
-        setMessage("Análise concluída.");
-      } catch (audioError) {
-        setMessage("Análise concluída, mas não foi possível iniciar o áudio.");
+      const informarFalhaDeAudio = (audioError: unknown) => {
+        setMessage("Análise concluída, mas não foi possível reproduzir o áudio.");
         setError(
           audioError instanceof Error
             ? audioError.message
             : "Verifique o mecanismo de texto para fala do Android."
         );
+      };
+
+      try {
+        await speak(analysis.descricao, informarFalhaDeAudio);
+        setMessage("Análise concluída. Reproduzindo descrição.");
+      } catch (audioError) {
+        informarFalhaDeAudio(audioError);
       }
     } catch (err) {
       setConnection(cameraResponded ? "online" : "offline");
@@ -202,16 +212,22 @@ export default function App() {
     if (!result) return;
 
     setError("");
-    try {
-      await speak(result.descricao);
-      setMessage("Reproduzindo descrição.");
-    } catch (audioError) {
-      setMessage("Não foi possível iniciar o áudio.");
+    setMessage("Iniciando leitura da descrição.");
+
+    const informarFalhaDeAudio = (audioError: unknown) => {
+      setMessage("Não foi possível reproduzir o áudio.");
       setError(
         audioError instanceof Error
           ? audioError.message
           : "Verifique o mecanismo de texto para fala do Android."
       );
+    };
+
+    try {
+      await speak(result.descricao, informarFalhaDeAudio);
+      setMessage("Reproduzindo descrição.");
+    } catch (audioError) {
+      informarFalhaDeAudio(audioError);
     }
   }
 
