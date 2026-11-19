@@ -432,16 +432,22 @@ void setup() {
 void loop() {
   servidor.handleClient();
 
-  if (WiFi.status() != WL_CONNECTED
-      && millis() - ultimaTentativaWiFi >= intervaloReconexao) {
-    ultimaTentativaWiFi = millis();
-    Serial.println("WI-FI_DESCONECTADO_RECONEXAO");
-    WiFi.reconnect();
-  }
+  if (WiFi.status() != WL_CONNECTED) {
+    // Encerra o anúncio antigo para poder publicá-lo novamente após reconectar.
+    if (mdnsIniciado) {
+      MDNS.end();
+      mdnsIniciado = false;
+    }
 
-  // Caso o Wi-Fi tenha caído durante a inicialização, publica o nome
-  // assim que a reconexão for concluída.
-  iniciarMdns();
+    if (millis() - ultimaTentativaWiFi >= intervaloReconexao) {
+      ultimaTentativaWiFi = millis();
+      Serial.println("WI-FI_DESCONECTADO_RECONEXAO");
+      WiFi.reconnect();
+    }
+  } else {
+    // Inicia o anúncio também se o Wi-Fi só conectar após a inicialização.
+    iniciarMdns();
+  }
 
   delay(2);
 }
