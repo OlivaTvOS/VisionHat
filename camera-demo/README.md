@@ -5,7 +5,7 @@ Aplicativo demonstrativo separado da interface principal. O celular aciona a ESP
 ## Fluxo
 
 1. A ESP32-CAM conecta-se ao roteador Wi-Fi e inicia um servidor HTTP na porta 80.
-2. O app chama POST /capture?idDispositivo=... no IP local da câmera.
+2. O app chama POST /capture?idDispositivo=... no nome local visionhat-camera.local (mDNS), sem depender do IP distribuído pelo DHCP.
 3. A ESP32-CAM captura a OV3660 e envia o JPEG como multipart, no campo imagem, para:
    https://visionhat-api.onrender.com/api/analises/imagem?idDispositivo=...
 4. A API retorna a descrição da IA. A câmera repassa a resposta ao app.
@@ -17,7 +17,7 @@ O celular e a câmera precisam estar na mesma rede Wi-Fi. A conexão da câmera 
 
 Abra firmware/visionhat_wifi/visionhat_wifi.ino na Arduino IDE.
 
-Na mesma pasta do sketch, copie wifi_config.example.h para wifi_config.h e preencha SSID e senha da sua rede. O arquivo wifi_config.h está no .gitignore, portanto não será versionado.
+Na mesma pasta do sketch, copie wifi_config.example.h para wifi_config.h e preencha o SSID e a senha do Wi-Fi ao qual a ESP32-CAM deverá se conectar. Para usar o hotspot do celular, coloque aqui o nome e a senha desse hotspot. O arquivo wifi_config.h está no .gitignore, portanto não será versionado. Essas credenciais ficam no firmware da ESP32-CAM; não é necessário recompilar o APK quando você trocar a rede.
 
 Use as mesmas configurações de placa e PSRAM da ESP32-CAM AI Thinker já validadas anteriormente. Grave o firmware e abra o Monitor Serial em 115200 baud.
 
@@ -31,7 +31,7 @@ A câmera permanece disponível enquanto receber energia. Para não precisar alt
 - Resolução SVGA, qualidade JPEG 10, framebuffer em PSRAM e ajustes de imagem preservados.
 - Botão físico e acionamento serial removidos.
 - Servidor local com GET /status e POST /capture?idDispositivo=ID.
-- Reconexão Wi-Fi automática em caso de queda.
+- Reconexão Wi-Fi automática em caso de queda.\n- Nome local fixo visionhat-camera.local anunciado por mDNS.
 - Envio JPEG multipart direto ao endpoint Java existente.
 
 ### Segurança do protótipo
@@ -78,12 +78,12 @@ Em Android 17 (API 37) ou superior, aplicações que tenham como alvo SDK 37+ ta
 
 1. Ligue a ESP32-CAM.
 2. Conecte o celular à mesma rede Wi-Fi.
-3. Abra o app e informe o IP exibido no Monitor Serial.
+3. Abra o app. O endereço padrão já é visionhat-camera.local; mantenha o celular conectado ao hotspot/rede usado pela câmera. Não é necessário consultar o IP.
 4. Informe o ID de um dispositivo já cadastrado na API VisionHat. Não use o ID do usuário: a rota Java exige um idDispositivo válido que exista no banco.
 5. Toque em Testar conexão. O indicador deve mostrar câmera conectada.
 6. Toque no botão central Tirar foto.
 
-O IP da câmera e o ID do dispositivo ficam salvos localmente no celular.
+O endereço local e o ID do dispositivo ficam salvos localmente no celular.
 
 ## 4. Limites
 
