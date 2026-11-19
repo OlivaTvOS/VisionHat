@@ -41,10 +41,12 @@ function parseResponseData<T>(data: unknown): T {
 
 function responseMessage(data: unknown, status: number): string {
   if (typeof data === "string") {
+    const body = data;
     try {
-      data = JSON.parse(data) as ApiError;
+      const parsed = JSON.parse(body) as unknown;
+      return responseMessage(parsed, status);
     } catch {
-      return data || "A câmera respondeu com HTTP " + status + ".";
+      return body || "A câmera respondeu com HTTP " + status + ".";
     }
   }
 
