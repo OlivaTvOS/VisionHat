@@ -83,9 +83,10 @@ Em Android 17 (API 37) ou superior, aplicações que tenham como alvo SDK 37+ ta
 2. Conecte o celular à mesma rede Wi-Fi.
 3. Abra o app. O endereço padrão já é visionhat-camera.local; mantenha o celular conectado ao hotspot/rede usado pela câmera. Não é necessário consultar o IP.
 4. Entre com e-mail e senha na seção Conta VisionHat. O app chama POST /api/usuarios/login e, com o idUsuario retornado, consulta GET /api/dispositivos/usuario/{idUsuario}. O primeiro dispositivo ativo é selecionado automaticamente; se houver mais de um, escolha na lista. A senha é usada somente na requisição de login e não fica salva no celular.
-5. Toque em Localizar câmera. O app tenta o nome mDNS visionhat-camera.local e preenche o IP real retornado por /status. Se o hotspot não resolver mDNS, informe manualmente o IP exibido no Monitor Serial.
-6. Conecte os fones Bluetooth antes da leitura, caso queira ouvir por eles, e confirme que a opção Áudio de mídia está habilitada nas configurações Bluetooth do Android.
-7. Toque no botão central Tirar foto.
+5. Use **Testar voz local · sem consumir IA** para validar a síntese pt-BR diretamente no celular. Esse teste reproduz uma frase fixa e não chama o endpoint de análise nem consome cota Gemini.
+6. Toque em Localizar câmera. O app tenta o nome mDNS visionhat-camera.local e preenche o IP real retornado por /status. Se o hotspot não resolver mDNS, informe manualmente o IP exibido no Monitor Serial.
+7. Conecte os fones Bluetooth antes da leitura, caso queira ouvir por eles, e confirme que a opção Áudio de mídia está habilitada nas configurações Bluetooth do Android.
+8. Toque no botão central Tirar foto.
 
 O e-mail, o IP/endereço da câmera e o ID do dispositivo ficam salvos localmente no celular. A senha não é armazenada.
 
