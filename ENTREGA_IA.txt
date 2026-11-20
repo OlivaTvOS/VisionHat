@@ -1,0 +1,44 @@
+ENTREGA - ARTIFICIAL INTELLIGENCE & CHATBOT
+
+Integrante
+RM569870 - Artur da Silva de Oliveira
+
+Arquivos principais
+- dataset/dados_visionhat.csv: dados experimentais utilizados no treinamento.
+- modelos_visionhat.ipynb: análise, treinamento, avaliação e exportação.
+- treinar_modelos.py: treinamento repetível dos modelos.
+- modelos_visionhat.joblib: pacote serializado dos modelos treinados.
+- dataset_code.py: API REST Flask.
+- requirements.txt: dependências da aplicação.
+
+Arquitetura da entrega
+- A API Flask é um módulo independente de Machine Learning.
+- Ela consome os modelos próprios exportados em modelos_visionhat.joblib.
+- A API Java utiliza uma análise multimodal complementar para imagens.
+- Não é afirmado que Java chama a API Flask nesta etapa, pois esse fluxo ainda
+  não foi implementado e não deve ser apresentado como concluído.
+
+Modelos
+1. K-Means agrupa análises com características numéricas semelhantes.
+2. Random Forest classifica o nível de atenção em BAIXO, MEDIO ou ALTO.
+3. Regressão Linear estima a confiança da detecção entre 0 e 100.
+
+API
+- GET /
+- POST /predict/atencao
+- POST /predict/confianca
+- POST /predict/agrupamento
+- POST /predict/analise
+
+Os resultados são experimentais. O CSV foi organizado para representar entradas
+possíveis do VisionHat, mas não é uma pesquisa com usuários reais. As classes
+BAIXO, MEDIO e ALTO e a estimativa de confiança são uma adaptação do protótipo
+para a base disponível. A API não substitui uma validação de segurança nem a
+análise de visão computacional integrada ao protótipo físico.
+
+Execução local
+1. Instalar as dependências: pip install -r requirements.txt
+2. Treinar os modelos: python treinar_modelos.py
+3. Iniciar a API: python dataset_code.py
+
+O arquivo modelos_visionhat.joblib precisa existir antes de iniciar a API.

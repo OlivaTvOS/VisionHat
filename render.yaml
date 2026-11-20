@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: visionhat-ia
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python treinar_modelos.py
+    startCommand: gunicorn --bind 0.0.0.0:$PORT dataset_code:app
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
