@@ -18,6 +18,10 @@ if not ARQUIVO_MODELOS.is_file():
 MODELOS = joblib.load(ARQUIVO_MODELOS)
 FEATURES = MODELOS["features"]
 FEATURES_CLUSTER = MODELOS["features_cluster"]
+AVISO_EXPERIMENTAL = (
+    "Resultado experimental calculado com uma base artificial de protótipo. "
+    "Não representa validação com pessoas, sensores ou ocorrências reais."
+)
 app = Flask(__name__)
 
 
@@ -92,6 +96,8 @@ def verificar_api():
         {
             "status": "disponível",
             "modelos": ["kmeans", "random_forest", "linear_regression"],
+            "base": "artificial e experimental",
+            "aviso": AVISO_EXPERIMENTAL,
         }
     )
 
@@ -115,6 +121,7 @@ def prever_atencao():
             "nivel_atencao": nivel,
             "probabilidades": probabilidades_por_nivel,
             "modelo": "RandomForestClassifier",
+            "aviso": AVISO_EXPERIMENTAL,
         }
     )
 
@@ -137,7 +144,7 @@ def prever_confianca():
         {
             "confianca_estimada": round(confianca, 2),
             "modelo": "LinearRegression",
-            "aviso": "Estimativa experimental; não substitui a validação da análise.",
+            "aviso": AVISO_EXPERIMENTAL,
         }
     )
 
@@ -156,7 +163,7 @@ def prever_agrupamento():
             "grupo": grupo,
             "nivel_representativo": MODELOS["mapa_niveis"][grupo],
             "modelo": "KMeans",
-            "aviso": "O grupo é uma aproximação baseada somente no dataset utilizado.",
+            "aviso": AVISO_EXPERIMENTAL,
         }
     )
 
@@ -190,6 +197,7 @@ def prever_analise():
             "confianca_estimada": round(confianca, 2),
             "grupo": grupo,
             "nivel_representativo": MODELOS["mapa_niveis"][grupo],
+            "aviso": AVISO_EXPERIMENTAL,
         }
     )
 
