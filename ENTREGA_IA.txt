@@ -4,24 +4,47 @@ Integrante
 RM569870 - Artur da Silva de Oliveira
 
 Arquivos principais
-- dataset/dados_visionhat.csv: dados experimentais utilizados no treinamento.
+- dataset/dados_visionhat.csv: base artificial com 45 registros, sendo 15 por classe.
 - modelos_visionhat.ipynb: análise, treinamento, avaliação e exportação.
-- treinar_modelos.py: treinamento repetível dos modelos.
+- treinar_modelos.py: treinamento repetível e geração das métricas.
 - modelos_visionhat.joblib: pacote serializado dos modelos treinados.
 - dataset_code.py: API REST Flask.
 - requirements.txt: dependências da aplicação.
 
-Arquitetura da entrega
-- A API Flask é um módulo independente de Machine Learning.
-- Ela consome os modelos próprios exportados em modelos_visionhat.joblib.
-- A API Java utiliza uma análise multimodal complementar para imagens.
-- Não é afirmado que Java chama a API Flask nesta etapa, pois esse fluxo ainda
-  não foi implementado e não deve ser apresentado como concluído.
+Origem e finalidade do CSV
+O CSV é uma representação artificial do tipo de registro que poderia ser cadastrado por pessoas usuárias do VisionHat no futuro. Os valores foram construídos para simular esse cenário e permitir o desenvolvimento acadêmico dos modelos. Não são dados coletados de pessoas reais, de sensores dos óculos ou de ocorrências de campo.
+
+Variáveis
+- quantidade_obstaculos
+- distancia_media_metros
+- luminosidade
+- velocidade_movimento
+- tipo_obstaculo_codigo
+- nivel_atencao
+- confianca_deteccao
+
+Os códigos de tipo usados nesta base são: 1 pessoa, 2 veículo, 3 buraco e 4 outro obstáculo. As classes BAIXO, MEDIO e ALTO e o valor de confiança na escala de 0 a 100 são rótulos e valores experimentais definidos para o protótipo.
 
 Modelos
-1. K-Means agrupa análises com características numéricas semelhantes.
+1. K-Means agrupa registros com características numéricas semelhantes.
 2. Random Forest classifica o nível de atenção em BAIXO, MEDIO ou ALTO.
-3. Regressão Linear estima a confiança da detecção entre 0 e 100.
+3. Regressão Linear estima o valor de confiança definido na base.
+
+Avaliação registrada nesta versão
+- K-Means: silhueta 0,480 e Adjusted Rand Index 0,807.
+- Random Forest: acurácia de 95,6% e F1 macro de 0,955, usando validação cruzada de cinco partes.
+- Regressão Linear: MAE de 2,25 pontos, RMSE de 2,95 pontos e R² de 0,937, usando validação cruzada de cinco partes.
+
+A validação cruzada gera previsões para cada registro enquanto ele fica fora do treino daquela dobra. Depois da avaliação, Random Forest e Regressão Linear são treinadas novamente com os 45 registros para gerar os modelos finais usados pela API. O K-Means é avaliado na própria base usada no agrupamento.
+
+Limitações
+As métricas representam somente o comportamento dos modelos sobre uma base pequena e artificial, organizada para o protótipo. Elas não comprovam desempenho em situações reais, não medem a precisão de detecção de obstáculos e não garantem segurança. O valor de confiança é uma variável simulada, não a confiança produzida por um modelo real de visão computacional.
+
+Arquitetura da entrega
+- A API Flask é um módulo independente de Machine Learning.
+- Ela consome os modelos exportados em modelos_visionhat.joblib.
+- A API Java utiliza uma análise multimodal complementar para imagens.
+- Não é afirmado que Java chama a API Flask nesta etapa, pois esse fluxo ainda não foi implementado.
 
 API
 - GET /
@@ -30,15 +53,9 @@ API
 - POST /predict/agrupamento
 - POST /predict/analise
 
-Os resultados são experimentais. O CSV foi organizado para representar entradas
-possíveis do VisionHat, mas não é uma pesquisa com usuários reais. As classes
-BAIXO, MEDIO e ALTO e a estimativa de confiança são uma adaptação do protótipo
-para a base disponível. A API não substitui uma validação de segurança nem a
-análise de visão computacional integrada ao protótipo físico.
-
 Execução local
 1. Instalar as dependências: pip install -r requirements.txt
 2. Treinar os modelos: python treinar_modelos.py
 3. Iniciar a API: python dataset_code.py
 
-O arquivo modelos_visionhat.joblib precisa existir antes de iniciar a API.
+O arquivo modelos_visionhat.joblib precisa existir antes de iniciar a API. O script de treinamento o gera automaticamente.
